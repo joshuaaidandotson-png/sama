@@ -248,3 +248,6 @@ body.enter-prev main.dash{animation:samaInL .42s cubic-bezier(.22,.8,.24,1)}
 .cols{align-items:start}
 .rise{animation-fill-mode:backwards!important}
 .pdf-pages canvas{height:calc(100vh - 290px)!important}
+/* résumé: FlowCV-style single column, full pages, page scrolls (no inner scrollbar) */
+.pdf-pages{flex-direction:column!important;align-items:center!important;gap:14px!important;max-height:none!important;overflow:visible!important}
+.pdf-pages canvas{width:100%!important;max-width:900px!important;height:auto!important;min-height:0!important}
