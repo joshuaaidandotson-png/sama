@@ -135,7 +135,7 @@ const sphere = document.getElementById("sphere");
 if (sphere) {
   const pop = document.getElementById("skillpop"), names = Object.keys(DATA.skills), N = names.length, reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const pts = names.map((n, i) => { const phi = Math.acos(1 - 2 * (i + .5) / N), th = Math.PI * (1 + Math.sqrt(5)) * i; return { n, x: Math.sin(phi) * Math.cos(th), y: Math.cos(phi), z: Math.sin(phi) * Math.sin(th) }; });
-  const els = pts.map(p => { const b = document.createElement("button"); b.type = "button"; b.textContent = p.n; b.addEventListener("click", () => { pop.innerHTML = `<b>${p.n}</b>${DATA.skills[p.n]}`; pop.hidden = false; }); sphere.appendChild(b); return b; });
+  const els = pts.map(p => { const b = document.createElement("button"); b.type = "button"; b.textContent = p.n; b.addEventListener("click", () => { pop.innerHTML = `<button type="button" class="popx" aria-label="Close">&times;</button><b>${p.n}</b>${DATA.skills[p.n]}`; pop.hidden = false; pop.querySelector(".popx").addEventListener("click", ev => { ev.stopPropagation(); pop.hidden = true; b.focus(); }); }); sphere.appendChild(b); return b; });
   let ax = 0.3, ay = 0, vx = 0, vy = reduce ? 0 : 0.004, drag = null;
   function render() {
     const r = Math.min(sphere.clientWidth, sphere.clientHeight) * 0.42, cx = Math.cos(ax), sx = Math.sin(ax), cy = Math.cos(ay), sy = Math.sin(ay);
@@ -146,6 +146,8 @@ if (sphere) {
     });
   }
   function loop() { if (!drag) { ay += vy; ax += vx; vx *= .95; if (Math.abs(vy) > .004) vy *= .95; else if (!reduce) vy = .004; } render(); requestAnimationFrame(loop); }
+  document.addEventListener("click", e => { if (!pop.hidden && !pop.contains(e.target) && !(e.target.closest && e.target.closest("#sphere button"))) pop.hidden = true; });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") pop.hidden = true; });
   sphere.addEventListener("pointerdown", e => { if (e.target.tagName === "BUTTON") return; drag = { x: e.clientX, y: e.clientY }; sphere.setPointerCapture(e.pointerId); pop.hidden = true; });
   sphere.addEventListener("pointermove", e => { if (!drag) return; const dx = e.clientX - drag.x, dy = e.clientY - drag.y; vy = dx * .0025; vx = dy * .0025; ay += vy; ax += vx; drag = { x: e.clientX, y: e.clientY }; });
   sphere.addEventListener("pointerup", () => drag = null);
@@ -183,4 +185,27 @@ document.querySelectorAll(".dash > *").forEach((el, i) => { el.style.animationDe
   document.querySelectorAll('.dash img').forEach(function(i){if(!i.complete)i.addEventListener('load',later);});
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(pack);
   pack();setTimeout(pack,900);setTimeout(pack,2000);
+})();
+
+// Smooth page-to-page slide (fallback for browsers without cross-document View Transitions)
+(function(){
+  var order=["professional","academic","personal","resume"];
+  var cur=document.body.dataset.page, ci=order.indexOf(cur);
+  var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var dir=sessionStorage.getItem("samaDir");
+  if(dir){document.documentElement.dataset.dir=dir;sessionStorage.removeItem("samaDir");}
+  var vt=("onpagereveal" in window)&&CSS.supports&&CSS.supports("view-transition-name","a");
+  document.querySelectorAll(".tabs a, .brand").forEach(function(a){
+    var k=(a.getAttribute("href")||"").replace(".html","");
+    var l=document.createElement("link");l.rel="prefetch";l.href=a.getAttribute("href");document.head.appendChild(l);
+    a.addEventListener("click",function(e){
+      if(e.metaKey||e.ctrlKey||e.shiftKey||k===cur)return;
+      var d=order.indexOf(k)>ci?"next":"prev";
+      sessionStorage.setItem("samaDir",d);document.documentElement.dataset.dir=d;
+      if(vt||reduce)return;
+      e.preventDefault();document.body.classList.add("leave-"+d);
+      setTimeout(function(){location.href=a.href;},260);
+    });
+  });
+  if(!vt&&!reduce&&dir){document.body.classList.add("enter-"+dir);}
 })();
