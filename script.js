@@ -13,17 +13,18 @@ const DATA = {
   birthday: { month: 3, day: 20 },
   // "Games I play" — a favorites mix, NOT hours played (equal shares until Joshua says otherwise)
   games: [["#1 GTA", 3], ["#2 Shinobi Life II (Roblox)", 2], ["#3 Overwatch", 1]],
+  // Popover text = Joshua's own source notes for each skill
   skills: {
-    "Internal Controls": "Applied at the Defense Commissary Agency (reconciling cash drawers under internal financial controls) and at Gifted & Talented Kid's Academy.",
-    "Audit Documentation": "Built through audit-readiness reviews at Gifted & Talented Kid's Academy, documenting financial records as evidence.",
-    "Excel": "Used in coursework and on the job for reconciliations and data review.",
-    "QuickBooks": "Used in coursework and accounting work.",
-    "POS Administration": "Operating owner of Crust Pizza Co.'s POS system across 30+ locations.",
-    "JIRA": "A work tool used to track tasks and issues.",
-    "Monday.com": "A work tool used to manage projects and workflows.",
-    "AI Automation & Data Validation": "Applied in Crust's POS data audits, comparing sales, labor and tax data between platforms.",
-    "Vendor Management": "Worked with distributor RosperTech on POS hardware orders and installs.",
-    "German (A2)": "Picked up while living in Wiesbaden, Germany."
+    "Internal Controls": "DeCA / Gifted &amp; Talented Kid's Academy",
+    "Audit Documentation": "Gifted &amp; Talented Kid's Academy audit-readiness",
+    "Excel": "Coursework or work",
+    "QuickBooks": "Coursework or work",
+    "POS Administration": "Crust Pizza Co.",
+    "JIRA": "Work tool",
+    "Monday.com": "Work tool",
+    "AI Automation & Data Validation": "Crust data audits",
+    "Vendor Management": "RosperTech",
+    "German (A2)": "Lived in Wiesbaden, Germany"
   }
 };
 /* ========================================================= */
@@ -154,22 +155,23 @@ if (sphere) {
   render(); loop();
 }
 /* entrance */
-document.querySelectorAll(".dash > *").forEach((el, i) => { el.style.animationDelay = (i * 60) + "ms"; el.classList.add("rise"); });
+
 
 // Masonry packing: each panel spans rows equal to its content height, so no blank space or gaps.
 (function(){
   function pack(){
     var on=window.matchMedia('(min-width: 900px)').matches;
     document.querySelectorAll('.dash').forEach(function(d){
+      if(d.hidden)return;
       d.classList.toggle('masonry',on);
       if(!on){Array.prototype.forEach.call(d.children,function(el){el.style.gridRow='';});return;}
       Array.prototype.forEach.call(d.children,function(el){
         el.style.gridRow='auto';el.style.alignSelf='';el.classList.remove('stretched');
-        var h=el.getBoundingClientRect().height+16;
+        var h=el.offsetHeight+16;
         el.style.gridRow='span '+Math.ceil(h/2);
       });
       // fill: grow each panel down to the next panel below it (or the board's bottom) so no gaps remain
-      var kids=Array.prototype.slice.call(d.children),R=kids.map(function(e){return e.getBoundingClientRect();});
+      var kids=Array.prototype.slice.call(d.children),R=kids.map(function(e){var t=e.offsetTop,l=e.offsetLeft;return {top:t,left:l,bottom:t+e.offsetHeight,right:l+e.offsetWidth};});
       var maxB=Math.max.apply(null,R.map(function(r){return r.bottom;}));
       kids.forEach(function(el,i){
         var r=R[i],target=maxB;
@@ -184,28 +186,46 @@ document.querySelectorAll(".dash > *").forEach((el, i) => { el.style.animationDe
   window.addEventListener('load',pack);window.addEventListener('resize',later);
   document.querySelectorAll('.dash img').forEach(function(i){if(!i.complete)i.addEventListener('load',later);});
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(pack);
-  pack();setTimeout(pack,900);setTimeout(pack,2000);
+  window.samaPack=pack;pack();setTimeout(pack,900);setTimeout(pack,2000);
 })();
 
-// Smooth page-to-page slide (fallback for browsers without cross-document View Transitions)
+// Single-page router: boards swap in place with a sideways slide; background never reloads.
 (function(){
   var order=["professional","academic","personal","resume"];
-  var cur=document.body.dataset.page, ci=order.indexOf(cur);
   var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var dir=sessionStorage.getItem("samaDir");
-  if(dir){document.documentElement.dataset.dir=dir;sessionStorage.removeItem("samaDir");}
-  var vt=("onpagereveal" in window)&&CSS.supports&&CSS.supports("view-transition-name","a");
-  document.querySelectorAll(".tabs a, .brand").forEach(function(a){
-    var k=(a.getAttribute("href")||"").replace(".html","");
-    var l=document.createElement("link");l.rel="prefetch";l.href=a.getAttribute("href");document.head.appendChild(l);
-    a.addEventListener("click",function(e){
-      if(e.metaKey||e.ctrlKey||e.shiftKey||k===cur)return;
-      var d=order.indexOf(k)>ci?"next":"prev";
-      sessionStorage.setItem("samaDir",d);document.documentElement.dataset.dir=d;
-      if(vt||reduce)return;
-      e.preventDefault();document.body.classList.add("leave-"+d);
-      setTimeout(function(){location.href=a.href;},260);
-    });
+  var boards={};document.querySelectorAll(".board").forEach(function(b){boards[b.dataset.board]=b;});
+  var cur=null,busy=false;
+  function stagger(b){if(reduce)return;Array.prototype.forEach.call(b.children,function(el,i){el.classList.remove("rise");void el.offsetWidth;el.style.animationDelay=(80+i*55)+"ms";el.classList.add("rise");});}
+  function mark(k){document.querySelectorAll("[data-nav]").forEach(function(a){var on=a.dataset.nav===k&&a.classList.contains("tab");a.classList.toggle("active",on);if(on)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
+    var b=boards[k];document.title=b.dataset.title.replace("&amp;","&")+" · Sama — Joshua Dotson";var f=document.getElementById("foot-title");if(f)f.innerHTML=b.dataset.title;document.body.dataset.page=k;}
+  function show(k,push){
+    if(!boards[k])k="professional";
+    if(k===cur||busy)return;
+    var from=cur?boards[cur]:null,to=boards[k];
+    var dir=cur&&order.indexOf(k)<order.indexOf(cur)?"prev":"next";
+    if(push)history.pushState({b:k},"","#"+k);
+    mark(k);
+    if(!from||reduce){if(from)from.hidden=true;to.hidden=false;cur=k;window.samaPack&&window.samaPack();if(!from)stagger(to);window.scrollTo(0,0);return;}
+    busy=true;
+    from.classList.add("out-"+dir);
+    setTimeout(function(){
+      from.hidden=true;from.classList.remove("out-"+dir);
+      window.scrollTo(0,0);
+      to.hidden=false;to.classList.add("in-"+dir);
+      window.samaPack&&window.samaPack();stagger(to);
+      requestAnimationFrame(function(){requestAnimationFrame(function(){to.classList.add("in-go");});});
+      setTimeout(function(){to.classList.remove("in-"+dir,"in-go");busy=false;cur=k;},480);
+      cur=k;
+    },300);
+  }
+  document.addEventListener("click",function(e){
+    var a=e.target.closest&&e.target.closest("a[href^='#']");if(!a)return;
+    var k=a.getAttribute("href").slice(1);if(!boards[k])return;
+    if(e.metaKey||e.ctrlKey||e.shiftKey)return;
+    e.preventDefault();show(k,true);
   });
-  if(!vt&&!reduce&&dir){document.body.classList.add("enter-"+dir);}
+  window.addEventListener("popstate",function(){show((location.hash||"#professional").slice(1),false);});
+  window.addEventListener("hashchange",function(){show((location.hash||"#professional").slice(1),false);});
+  show((location.hash||"#professional").slice(1),false);
+  window.samaShow=show;
 })();
