@@ -19,14 +19,9 @@ const DATA = {
   skills: {
     "Internal Controls": "DeCA / Gifted &amp; Talented Kid's Academy",
     "Audit Documentation": "Gifted &amp; Talented Kid's Academy audit-readiness",
-    "Excel": "Coursework or work",
-    "QuickBooks": "Coursework or work",
     "POS Administration": "Crust Pizza Co.",
-    "JIRA": "Work tool",
-    "Monday.com": "Work tool",
     "AI Automation & Data Validation": "Crust data audits",
-    "Vendor Management": "RosperTech",
-    "German (A2)": "Lived in Wiesbaden, Germany"
+    "Vendor Management": "RosperTech"
   }
 };
 /* ========================================================= */
@@ -92,6 +87,10 @@ const R = {
   },
   gpa_uh() { return gauge(DATA.gpaUH, 4, "UH GPA gauge"); },
   gpa_lsc() { return gauge(DATA.gpaLSC, 4, "Lone Star GPA gauge"); },
+  gpa_both() {
+    const rows = [["University of Houston", DATA.gpaUH, C1], ["Lone Star College", DATA.gpaLSC, C2]];
+    return `<div class="gpabars">${rows.map(([n, v, c]) => `<div class="gb"><div class="gbh"><span>${n}</span><b>${v.toFixed(2).replace(/0$/, "")}</b></div><div class="gbt"><i style="--w:${(v / 4 * 100).toFixed(1)}%;background:${c}"></i></div></div>`).join("")}<div class="gbx"><span>0</span><span>2.0</span><span>4.0</span></div></div>`;
+  },
   credits() {
     const { uh, lsc, total } = DATA.credits, w = 320, L = 8, Wd = w - 16, s = v => v / total * Wd, done = uh + lsc;
     return svg(w, 96, `<text x="${L}" y="16" class="t">${done} <tspan class="s">of ${total} hours · ${Math.round(done / total * 100)}%</tspan></text>
