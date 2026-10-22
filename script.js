@@ -1,5 +1,7 @@
 /* ===================== Editable data ===================== */
 const DATA = {
+  // Board banners ("Label: answer"). Swap the Academic / Personal labels here.
+  bannerLabels: { academic: "Proudest academic achievement", personal: "Current goal" },
   // Cumulative Crust POS locations — approximate, based on Joshua's recollection
   pos: { labels: ["Jun", "Jul", "Aug", "Sep", "Oct"], values: [6, 10, 17, 22, 30], suffix: "+" },
   inspection: { score: 99, max: 100 },
@@ -110,6 +112,7 @@ const R = {
     return `<div class="count" data-count="${t.toISOString()}" aria-live="polite"></div>`;
   }
 };
+document.querySelectorAll("[data-banner]").forEach(el => { const v = DATA.bannerLabels[el.dataset.banner]; if (v) el.textContent = v; });
 document.querySelectorAll("[data-chart]").forEach(el => { const f = R[el.dataset.chart]; if (f) el.innerHTML = f(); });
 /* countdowns */
 function tickCounts() {

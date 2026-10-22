@@ -251,3 +251,8 @@ body.enter-prev main.dash{animation:samaInL .42s cubic-bezier(.22,.8,.24,1)}
 /* résumé: FlowCV-style single column, full pages, page scrolls (no inner scrollbar) */
 .pdf-pages{flex-direction:column!important;align-items:center!important;gap:14px!important;max-height:none!important;overflow:visible!important}
 .pdf-pages canvas{width:100%!important;max-width:900px!important;height:auto!important;min-height:0!important}
+/* Team Lead → Corporate Manager: one straight aligned column (no staircase) */
+.ladder{padding-left:0!important;margin-left:0!important}
+.ladder .step,.st1,.st2,.st3{margin:0!important;width:100%;box-sizing:border-box;background:rgba(255,255,255,.08)!important}
+.badge{transition:transform .3s cubic-bezier(.22,.8,.24,1),box-shadow .3s}.badge:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 0 16px rgba(255,210,173,.4)}
+.badge .bl{font-weight:700}
