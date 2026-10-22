@@ -278,3 +278,4 @@ body.enter-prev main.dash{animation:samaInL .42s cubic-bezier(.22,.8,.24,1)}
 .stat-panel .chart .gpabars{width:100%}
 .chart:has(.gpabars){display:block!important}
 .interests{grid-template-columns:repeat(3,1fr)!important}@media (max-width:700px){.interests{grid-template-columns:1fr 1fr!important}}.dash.masonry .photo-card.profile img{object-position:50% 70%!important}
+.panel:has(.lang){display:flex;flex-direction:column}.panel:has(.lang) .chips{flex:1;display:flex;flex-wrap:wrap;align-content:space-evenly;gap:12px}.panel:has(.lang) .chip{padding:10px 14px}
