@@ -301,7 +301,7 @@ body.enter-prev main.dash{animation:samaInL .42s cubic-bezier(.22,.8,.24,1)}
 .dash.packed{grid-auto-rows:2px;row-gap:0!important;align-items:start}
 .dash.packed>*{margin:0!important;align-self:start}
 .dash.packed>.pk-fill{align-self:stretch!important}
-/* résumé v50: static page images, full content width (replaces PDF.js canvas viewer) */
+/* résumé v51: static page images, full content width (replaces PDF.js canvas viewer) */
 .dash .pdfview{width:auto!important;max-width:none!important;justify-self:stretch!important;padding:16px!important}
 .res-pages{display:flex;flex-direction:column;align-items:center;gap:16px}
 .res-pages img{display:block;width:100%;max-width:900px;height:auto;background:#fff;border-radius:6px;box-shadow:0 10px 30px rgba(0,0,0,.3)}
