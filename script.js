@@ -123,7 +123,10 @@ function tickCounts() {
   document.querySelectorAll("[data-count]").forEach(el => {
     let ms = Math.max(0, new Date(el.dataset.count) - new Date());
     const d = Math.floor(ms / 864e5), h = Math.floor(ms / 36e5) % 24, m = Math.floor(ms / 6e4) % 60, s = Math.floor(ms / 1e3) % 60;
-    el.innerHTML = [[d, "days"], [h, "hrs"], [m, "min"], [s, "sec"]].map(([v, l]) => `<div><b>${String(v).padStart(2, "0")}</b><span>${l}</span></div>`).join("");
+    const vals = [d, h, m, s].map(v => String(v).padStart(2, "0")), bs = el.querySelectorAll("b");
+    /* scroll_fix_1024: update the digits in place (no node churn every second) */
+    if (bs.length === 4) { bs.forEach((b, i) => { if (b.textContent !== vals[i]) b.textContent = vals[i]; }); return; }
+    el.innerHTML = [[d, "days"], [h, "hrs"], [m, "min"], [s, "sec"]].map(([v, l], i) => `<div><b>${vals[i]}</b><span>${l}</span></div>`).join("");
   });
 }
 tickCounts(); setInterval(tickCounts, 1000);

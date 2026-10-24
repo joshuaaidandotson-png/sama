@@ -6,9 +6,12 @@
   function packGrid(g,gap,minW){
     var kids=Array.prototype.filter.call(g.children,function(e){return !e.hidden&&getComputedStyle(e).display!=="none"&&getComputedStyle(e).position!=="absolute";});
     var on=window.innerWidth>=minW;
+    /* scroll_fix_1024: keep the grid's current height while it is re-measured. Resetting the row spans collapses the
+       grid for one layout pass, the page gets shorter than scrollY, and the browser snaps the page back to the top. */
+    var sy=window.scrollY,sx=window.scrollX;g.style.minHeight=g.offsetHeight+"px";
     g.classList.toggle("masonry",on);g.classList.toggle("packed",on);
     kids.forEach(function(e){e.style.gridColumn="";e.style.gridRow="";e.style.gridRowEnd="";e.classList.remove("pk-fill","stretched");e.style.alignSelf="";});
-    if(!on||!kids.length)return;
+    if(!on||!kids.length){g.style.minHeight="";return;}
     var W=g.clientWidth-parseFloat(getComputedStyle(g).paddingLeft||0)-parseFloat(getComputedStyle(g).paddingRight||0);
     var colW=(W-11*gap)/12,G=Math.round(gap/2),bot=[0,0,0,0,0,0,0,0,0,0,0,0],P=[];
     var tail=kids.filter(function(e){return e.classList.contains("soc-foot");});kids=kids.filter(function(e){return tail.indexOf(e)<0;});
@@ -45,6 +48,7 @@
     });
     tail.forEach(function(e){e.style.gridColumn="1 / -1";e.style.gridRow=(maxB+G+1)+" / span "+Math.max(1,Math.ceil(e.getBoundingClientRect().height/2));});
     P.forEach(function(p){p.e.style.gridColumn=(p.c+1)+" / span "+p.w;p.e.style.gridRow=(p.t+1)+" / span "+p.h;});
+    g.style.minHeight="";if(window.scrollY!==sy)window.scrollTo(sx,sy);
   }
   function packAll(){
     document.querySelectorAll(".dash,.wgrid").forEach(function(g){
@@ -57,6 +61,12 @@
   addEventListener("load",later);addEventListener("resize",later);document.addEventListener("sama:board",later);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(later);
   document.addEventListener("load",function(e){if(e.target&&e.target.tagName==="IMG")later();},true);
-  new MutationObserver(later).observe(document.body,{childList:true,subtree:true});
+  /* scroll_fix_1024: only repack when panels are added/removed or a board/grid changes, not on every text tick (the
+     countdown rewrites its digits every second, which used to repack the board and jump the page to the top).
+     Content that changes height is caught by the ResizeObserver below. */
+  function relevant(rs){for(var i=0;i<rs.length;i++){var t=rs[i].target;if(t.nodeType===1&&(t.matches(".dash,.wgrid,.board,main,body")))return true;}return false;}
+  new MutationObserver(function(rs){if(relevant(rs))later();}).observe(document.body,{childList:true,subtree:true});
+  if(window.ResizeObserver){var seen=new WeakSet(),hs=new WeakMap(),ro=new ResizeObserver(function(es){var ch=false;es.forEach(function(en){var h=Math.round(en.contentRect.height),o=hs.get(en.target);if(o!==undefined&&Math.abs(o-h)>1)ch=true;hs.set(en.target,h);});if(ch)later();});
+    setInterval(function(){document.querySelectorAll(".wgrid>*>*,.dash>*>*").forEach(function(c){if(!seen.has(c)){seen.add(c);ro.observe(c);}});},1000);}
   later();setTimeout(packAll,900);setTimeout(packAll,2200);
 })();
