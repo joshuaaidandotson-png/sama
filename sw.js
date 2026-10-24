@@ -1,5 +1,5 @@
 // Sama Studios (public) service worker, scope /sama/: network first, cached copy when offline.
-const CACHE="sama-pub-v11";
+const CACHE="sama-pub-v12";
 const SHELL=["./","index.html","style.css","public-v7.css","sama-nav.css","sama-nav.js","site.js","script.js","pack.js","manifest.webmanifest","assets/icon-192.png","assets/icon-512.png","assets/apple-touch-icon.png","assets/favicon.svg","assets/favicon-32.png","assets/favicon-16.png"];
 self.addEventListener("install",ev=>{ev.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).catch(()=>{}));self.skipWaiting();});
 self.addEventListener("activate",ev=>{ev.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith("sama-pub-")&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});

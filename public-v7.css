@@ -174,3 +174,4 @@ h3.w-h3 img.stk.w-stk{position:static;width:34px;height:34px;flex:none;transform
 .snav-t,.snav-t:hover,.snav-t:focus-visible{transform:none!important;box-shadow:none!important;transition:none}
 .snav-t:not(.on):hover{background:transparent;color:rgba(255,255,255,.78)}
 @media (max-width:860px){.nav-host{position:relative;padding:8px 10px 12px;margin-bottom:16px}.nav-host .snav{margin:0}}
+@media (max-width:520px){.ha-btns{flex-wrap:wrap;row-gap:12px}} /* 12:10 PM Oct 24: X sticker made the Academic hero row overflow at 390px; let the sticker row drop to its own line when it does not fit */
