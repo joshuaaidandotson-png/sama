@@ -116,14 +116,28 @@ ul.list,.interests ul,.hl-list{list-style:none;padding-left:0}
 ul.list > li,.interests ul > li{position:relative;padding-left:1.35em}
 ul.list > li::before,.interests ul > li::before{content:"★";position:absolute;left:0;top:.05em;color:var(--gold);font-size:.85em}
 /* Theme follows macOS (light / dark) */
-@media (prefers-color-scheme: dark){
- :root{--bg:#0F1426;--bg2:#1A2140;--surface:#161D36;--surface2:#1C2443;--ink:#EEF0F8;--ink2:#B5BCD4;--ink3:#7E86A3;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.16);--sky-l:#1D2D4A;--sage-l:#1B3227;--mari-l:#3A2C14;--plum-l:#2A2148;--tom-l:#3D1F1A;--gold-ll:#33291A}
- body{background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1.2px);background-size:22px 22px}
- .btn.ghost:hover{background:var(--surface2)}.modal-card{color:var(--ink)}
- .rk{color:#141C36}
-}
+/* round5: light mode only (no dark theme) */
+:root{color-scheme:light}
 @media (max-width:860px){.ha-top{flex-direction:row!important;align-items:flex-start}}
 /* round4: band buttons readable in both themes */
 .band .btn:not(.ghost){background:#fff;color:#1d1d1f!important;border-color:#fff}
 .band .btn.ghost{background:rgba(255,255,255,.14);color:#fff!important;border-color:rgba(255,255,255,.45)}
 .band .btn.ghost.disabled{color:rgba(255,255,255,.75)!important}
+
+/* round5: About Me sizes to its content (no stretch); highlights become a tidy grid below it */
+.board[data-board="home"]{align-items:start}
+.home-about,.home-high{align-self:start;height:auto!important;min-height:0!important}
+.home-about.s12,.home-high.s12{grid-column:1/-1}
+.home-about .ha-bio{max-width:none}
+.home-high .hl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.home-high .hl li{margin:0}
+@media (max-width:860px){.home-high .hl{grid-template-columns:1fr}}
+.home-high .hl-stk{right:6px!important}
+/* round5: board tiles replace page tabs in the top bar */
+.board-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:16px!important}
+.board-tiles a{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:16px;background:var(--surface2,#fff);border:1px solid var(--line,rgba(0,0,0,.06));font:700 1rem var(--body);color:var(--ink);text-decoration:none;transition:transform .2s}
+.board-tiles a:hover{transform:translateY(-2px)}
+.board-tiles a small{display:block;font-weight:500;font-size:.78rem;color:var(--ink3)}
+.board-tiles a .bt-e{font-size:1.5rem}
+.board-tiles a.on{outline:2px solid var(--marigold,#F2B33D)}
+@media (max-width:860px){.board-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}

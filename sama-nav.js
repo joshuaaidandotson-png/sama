@@ -16,7 +16,7 @@ export function mountNav(host,{groups,active,account,settings,brandHref}){
     const t=a(g.href,"snav-t",el("span","snav-e",g.emoji||""),el("span","snav-l",g.label)); if(g.key===active)t.setAttribute("aria-current","page"); w.append(t);
     if(g.subs&&g.subs.length){ const exp=el("button","snav-x","▾"); exp.type="button"; exp.setAttribute("aria-label","Show "+g.label+" pages"); exp.setAttribute("aria-expanded","false");
       exp.onclick=ev=>{ev.stopPropagation();const o=w.classList.toggle("open");exp.setAttribute("aria-expanded",String(o));}; w.append(exp);
-      const m=el("div","snav-menu"); g.subs.forEach(s=>m.append(a(s.href,"snav-mi",el("span",null,s.emoji||"•"),el("span",null,s.label)))); w.append(m); }
+      const m=el("div","snav-menu"); g.subs.forEach(s=>m.append(a(s.href,"snav-mi",el("span",null,s.emoji||"★"),el("span",null,s.label)))); w.append(m); }
     nav.append(w); });
   // phone: the account action also lives at the bottom of the menu (no hover on touch)
   const am=el("div","snav-g snav-accm"); const acc2=acc.cloneNode(true); acc2.className="snav-t"; if(!account.href) acc2.onclick=account.onClick; am.append(acc2); nav.append(am);

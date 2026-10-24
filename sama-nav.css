@@ -12,7 +12,7 @@
 .snav a{color:inherit;text-decoration:none}
 .snav-brand{position:relative;flex-shrink:0}
 .snav-wm{display:block;font-family:var(--display);font-style:italic;font-weight:900;font-size:1.3rem;letter-spacing:-.02em;padding:6px 6px 6px 0;white-space:nowrap}
-.snav-wm::after{content:"®";font-style:normal;font-family:var(--body);font-size:.42em;vertical-align:super;margin-left:2px;color:var(--marigold)}
+.snav-wm::before,.snav-wm::after{content:"★";font-style:normal;font-family:var(--body);font-size:.62em;vertical-align:middle;color:var(--marigold,#F2B33D)}.snav-wm::before{margin-right:6px}.snav-wm::after{margin-left:6px}
 .snav-tabs{display:flex;gap:2px;flex:1;justify-content:center;flex-wrap:nowrap;min-width:0}
 .snav-g{position:relative;display:flex;align-items:center}
 .snav-t{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;font-weight:600;font-size:.86rem;color:rgba(255,255,255,.78);transition:background .2s,color .2s;white-space:nowrap}
