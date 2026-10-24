@@ -167,3 +167,10 @@ h3.w-h3 img.stk.w-stk{position:static;width:34px;height:34px;flex:none;transform
 
 .band.b-res{--bA:#1E4A3B;--bB:#3E9A75}
 @media (max-width:860px){.hero.band .band-stk{width:50px;top:10px;right:10px}.hero.band>h1,.hero.band>.eyebrow{padding-right:58px}}
+/* dev_20261024: tabs never fuse with the boards. Solid page-colour band behind the sticky bar, a fine rule
+   under it and a fixed 20px gap before content. Tabs are plain links: no hover lift, glow or scale. */
+.nav-host{position:sticky;top:0;z-index:50;background:var(--bg,#F6EFE3);padding:12px 0 16px;margin-bottom:20px;box-shadow:0 1px 0 rgba(27,36,64,.14),0 10px 18px -14px rgba(27,36,64,.35)}
+.nav-host .snav{margin:0 auto;top:0;position:relative}
+.snav-t,.snav-t:hover,.snav-t:focus-visible{transform:none!important;box-shadow:none!important;transition:none}
+.snav-t:not(.on):hover{background:transparent;color:rgba(255,255,255,.78)}
+@media (max-width:860px){.nav-host{position:relative;padding:8px 10px 12px;margin-bottom:16px}.nav-host .snav{margin:0}}

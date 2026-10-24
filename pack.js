@@ -7,7 +7,7 @@
     var kids=Array.prototype.filter.call(g.children,function(e){return !e.hidden&&getComputedStyle(e).display!=="none"&&getComputedStyle(e).position!=="absolute";});
     var on=window.innerWidth>=minW;
     g.classList.toggle("masonry",on);g.classList.toggle("packed",on);
-    kids.forEach(function(e){e.style.gridColumn="";e.style.gridRow="";e.style.gridRowEnd="";e.classList.remove("pfill","stretched");e.style.alignSelf="";});
+    kids.forEach(function(e){e.style.gridColumn="";e.style.gridRow="";e.style.gridRowEnd="";e.classList.remove("pk-fill","stretched");e.style.alignSelf="";});
     if(!on||!kids.length)return;
     var W=g.clientWidth-parseFloat(getComputedStyle(g).paddingLeft||0)-parseFloat(getComputedStyle(g).paddingRight||0);
     var colW=(W-11*gap)/12,G=Math.round(gap/2),bot=[0,0,0,0,0,0,0,0,0,0,0,0],P=[];
@@ -19,21 +19,29 @@
       return {e:e,w:Math.max(1,Math.min(12,w||12)),h:Math.max(1,Math.ceil(e.getBoundingClientRect().height/2))};
     });
     function spot(it){var best=null;for(var c=0;c+it.w<=12;c++){var t=0,i;for(i=c;i<c+it.w;i++)t=Math.max(t,bot[i]);var waste=0;for(i=c;i<c+it.w;i++)waste+=t-bot[i];var sc=t+waste*0.6/it.w;if(!best||sc<best.sc-0.01)best={c:c,t:t,sc:sc,waste:waste};}return best;}
+    /* dev_20261024: 2-step lookahead. Among the next few cards, place the one whose spot (plus the best follow-up)
+       leaves the least empty area under it; ties keep page order. Stops the "narrow card first, hole later" gaps. */
+    function wasteAt(b,it){var best=null;for(var c=0;c+it.w<=12;c++){var t=0,i;for(i=c;i<c+it.w;i++)t=Math.max(t,b[i]);var w=0;for(i=c;i<c+it.w;i++)w+=t-b[i];if(!best||w<best.w-0.5||(Math.abs(w-best.w)<=0.5&&t<best.t))best={c:c,t:t,w:w};}return best;}
+    function put(b,it,sp){var nb=b.slice();for(var j=sp.c;j<sp.c+it.w;j++)nb[j]=sp.t+it.h+G;return nb;}
     while(Q.length){
-      var k=0,b0=spot(Q[0]);
-      if(b0.waste>0){ /* pull a later, narrower card forward if it can sit higher (fills the low columns first) */
-        for(var q=1;q<Math.min(Q.length,8);q++){if(Q[q].w>=Q[0].w)continue;var bq=spot(Q[q]);if(bq.t<b0.t&&bq.t+Q[q].h+G<=b0.t+Q[q].h){k=q;break;}}
-      }
-      var it=Q.splice(k,1)[0],best=spot(it);
+      var L=Math.min(Q.length,4),pick=0,pickSc=null,pickSp=null;
+      for(var i1=0;i1<L;i1++){var s1=wasteAt(bot,Q[i1]),sc=s1.w*colW;
+        if(L>1){var nb=put(bot,Q[i1],s1),m=null;for(var i2=0;i2<L;i2++){if(i2===i1)continue;var s2=wasteAt(nb,Q[i2]);if(m===null||s2.w<m)m=s2.w;}sc+=m*colW*0.8;}
+        sc+=i1*4+s1.t*0.02;
+        if(pickSc===null||sc<pickSc){pickSc=sc;pick=i1;pickSp=s1;}}
+      var it=Q.splice(pick,1)[0],best=pickSp;
       for(var j=best.c;j<best.c+it.w;j++)bot[j]=best.t+it.h+G;
       P.push({e:it.e,c:best.c,w:it.w,t:best.t,h:it.h});
     }
+    /* widen a card sideways into empty columns when the whole strip beside it is free */
+    function freeCol(c,t,b,me){return P.every(function(o){return o===me||c<o.c||c>=o.c+o.w||o.t+o.h+G<=t||o.t>=b+G;});}
+    P.forEach(function(p){while(p.c+p.w<12&&freeCol(p.c+p.w,p.t,p.t+p.h,p))p.w++;while(p.c>0&&freeCol(p.c-1,p.t,p.t+p.h,p)){p.c--;p.w++;}});
     var maxB=Math.max.apply(null,P.map(function(p){return p.t+p.h;}));
     P.forEach(function(p){
       var tgt=null;
       P.forEach(function(o){if(o!==p&&o.t>=p.t+p.h&&o.c<p.c+p.w&&o.c+o.w>p.c){var b=o.t-G;if(tgt===null||b<tgt)tgt=b;}});
       if(tgt===null)tgt=(maxB-(p.t+p.h)<=70)?maxB:p.t+p.h; /* even the bottom edge when close */
-      if(tgt-(p.t+p.h)>0){p.h=tgt-p.t;p.e.classList.add("pfill");}
+      if(tgt-(p.t+p.h)>0){p.h=tgt-p.t;p.e.classList.add("pk-fill");}
     });
     tail.forEach(function(e){e.style.gridColumn="1 / -1";e.style.gridRow=(maxB+G+1)+" / span "+Math.max(1,Math.ceil(e.getBoundingClientRect().height/2));});
     P.forEach(function(p){p.e.style.gridColumn=(p.c+1)+" / span "+p.w;p.e.style.gridRow=(p.t+1)+" / span "+p.h;});
