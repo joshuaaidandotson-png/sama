@@ -37,3 +37,11 @@
 }
 @media (max-width:420px){.snav-clock{display:none}.snav-t{padding:7px 8px;font-size:.8rem}}
 html{background:var(--bg)}
+
+/* Oct 24 5:13 AM: the one hover menu on the public site, on the Sama Studios brand; its only item is Login. Tap on phone. */
+.snav-brand{position:relative;flex-shrink:0}
+.snav-bmenu{position:absolute;left:0;top:100%;padding-top:8px;z-index:60;opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .18s,transform .18s,visibility .18s}
+.snav-bmenu .snav-bmi{display:flex;align-items:center;gap:8px;min-width:150px;padding:10px 14px;border-radius:14px;background:#FBF7EE;color:var(--navy,#141C36);font:700 .88rem var(--body);text-decoration:none;box-shadow:0 10px 30px rgba(20,28,54,.25)}
+.snav-bmenu .snav-bmi:hover,.snav-bmenu .snav-bmi:focus-visible{background:#fff}
+@media (hover:hover){.snav-brand:hover .snav-bmenu{opacity:1;visibility:visible;transform:none}}
+.snav-brand:focus-within .snav-bmenu,.snav-brand.open .snav-bmenu{opacity:1;visibility:visible;transform:none}

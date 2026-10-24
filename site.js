@@ -1,5 +1,5 @@
 // Public site: shared Sama nav + landing clock/greeting + clickable panels -> overview pages. Public content only.
-import { mountNav, greeting } from "./sama-nav.js?v=16";
+import { mountNav, greeting } from "./sama-nav.js?v=17";
 const BOARDS=[["professional","💼","Professional"],["academic","📚","Academic"],["personal","🌸","Social"],["resume","📄","Résumé"]];
 const titleOf=p=>{const h=p.querySelector("h1,h3,.slabel,h2"); return h?h.textContent.trim().replace(/\s+/g," "):"";};
 const panels=k=>[...document.querySelectorAll(`.board[data-board="${k}"] > .panel`)];
