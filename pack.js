@@ -11,6 +11,7 @@
     if(!on||!kids.length)return;
     var W=g.clientWidth-parseFloat(getComputedStyle(g).paddingLeft||0)-parseFloat(getComputedStyle(g).paddingRight||0);
     var colW=(W-11*gap)/12,G=Math.round(gap/2),bot=[0,0,0,0,0,0,0,0,0,0,0,0],P=[];
+    var tail=kids.filter(function(e){return e.classList.contains("soc-foot");});kids=kids.filter(function(e){return tail.indexOf(e)<0;});
     var Q=kids.map(function(e){
       var cs=getComputedStyle(e),ce=cs.gridColumnEnd,cst=cs.gridColumnStart,w;
       if(/^span \d+/.test(ce))w=parseInt(ce.slice(5),10);else if(/^span \d+/.test(cst))w=parseInt(cst.slice(5),10);else if(ce==="-1")w=12;
@@ -34,6 +35,7 @@
       if(tgt===null)tgt=(maxB-(p.t+p.h)<=70)?maxB:p.t+p.h; /* even the bottom edge when close */
       if(tgt-(p.t+p.h)>0){p.h=tgt-p.t;p.e.classList.add("pfill");}
     });
+    tail.forEach(function(e){e.style.gridColumn="1 / -1";e.style.gridRow=(maxB+G+1)+" / span "+Math.max(1,Math.ceil(e.getBoundingClientRect().height/2));});
     P.forEach(function(p){p.e.style.gridColumn=(p.c+1)+" / span "+p.w;p.e.style.gridRow=(p.t+1)+" / span "+p.h;});
   }
   function packAll(){
