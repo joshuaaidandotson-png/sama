@@ -9,16 +9,16 @@ const DATA = {
   team: 7,
   hardware: { min: 1000, max: 5000 },
   gpaUH: 3.57,
-  gpaLSC: 3.6,
-  credits: { uh: 33, lsc: 15, total: 120 },      // 120 = UH 2026–27 BBA Accounting requirement
+  gpaLSC: 3.8,
+  credits: { uh: 21, lsc: 15, total: 120 },      // 120 = UH bachelor's degree requirement
   gtaRelease: "2026-11-19T00:00:00",               // Rockstar Games official date
   birthday: { month: 3, day: 20 },
   // "Games I play" — a favorites mix, NOT hours played (equal shares until Joshua says otherwise)
   games: [["#1 GTA", 3], ["#2 Shinobi Life II (Roblox)", 2], ["#3 Overwatch", 1]],
   // Popover text = Joshua's own source notes for each skill
   skills: {
-    "Internal Controls": "DeCA / Gifted &amp; Talented Kid's Academy",
-    "Audit Documentation": "Gifted &amp; Talented Kid's Academy audit-readiness",
+    "Internal Controls": "DeCA / Gifted &amp; Talented Kid’s Academy",
+    "Audit Documentation": "Gifted &amp; Talented Kid’s Academy audit-readiness",
     "POS Administration": "Crust Pizza Co.",
     "AI Automation & Data Validation": "Crust data audits",
     "Vendor Management": "RosperTech"
