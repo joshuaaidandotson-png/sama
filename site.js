@@ -26,3 +26,11 @@ const hg=document.getElementById("home-greet"); const tick=()=>{ if(hg) hg.textC
 draw(); addEventListener("hashchange",draw); document.addEventListener("sama:board",draw);
 const y=document.getElementById("year"); if(y) y.textContent=new Date().getFullYear();
 if(location.hash.includes("/")&&window.samaShow) window.samaShow(location.hash.slice(1),false);
+// Stickers like the private side: one unique sticker per card title (no repeats on a board) + social stickers footer on every board.
+const WSTK_PUB={professional:{"Jobs":"briefcase","Internships":"handshake","Skills":"hammer_and_wrench","Projects":"light_bulb","Awards":"trophy","Certifications":"scroll"},
+ academic:{"Educational Institutions":"school","Current classes":"books","What I’m studying & why":"brain","What I'm studying & why":"brain","Awards":"military_medal","Organizations":"card_index_dividers","Goals":"bullseye"},
+ personal:{"Short bio":"memo","Song":"next_track_button","Interests":"star","Top games":"video_game","Hobbies":"artist_palette","Social links":"megaphone","Christianity":"bust_in_silhouette"}};
+document.querySelectorAll('.board[data-board]').forEach(b=>{ const M=WSTK_PUB[b.dataset.board]||{}; const used=new Set();
+  b.querySelectorAll("h3").forEach(h=>{ const ic=h.querySelector("svg.ic"); if(!ic) return; const k=M[h.textContent.trim()]; if(!k||used.has(k)) return; used.add(k);
+    const im=document.createElement("img"); im.className="stk w-stk"; im.src="assets/stickers/w_"+k+".webp"; im.alt=""; im.width=34; im.height=34; ic.replaceWith(im); h.classList.add("w-h3"); });
+  if(b.dataset.board!=="overview"&&!b.querySelector(".soc-foot")){ const src=document.querySelector(".soc-stks"); if(src){ const f=document.createElement("footer"); f.className="soc-foot s12"; const t=document.createElement("span"); t.className="soc-foot-t"; t.textContent="★ Joshua-Sama · Christ Luvr ★"; f.append(t,src.cloneNode(true)); b.append(f); } } });

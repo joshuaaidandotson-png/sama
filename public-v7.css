@@ -147,3 +147,10 @@ ul.list > li::before,.interests ul > li::before{content:"★";position:absolute;
 .jd-a > li{list-style:none;position:relative;padding-left:1.9em}ol.list > li{list-style:none;position:relative;padding-left:1.35em}
 .jd-a > li::before{content:"★";position:absolute;left:10px;top:8px;color:var(--gold);font-size:.85em}
 ol.list{padding-left:0}ol.list > li::before{content:"★";position:absolute;left:0;top:.05em;color:var(--gold);font-size:.85em}
+/* Stickers like the private side */
+h3.w-h3{display:flex;align-items:center;gap:8px}
+h3.w-h3 img.stk.w-stk{position:static;width:34px;height:34px;flex:none;transform:rotate(-8deg)}
+.soc-foot{grid-column:1/-1;display:flex;flex-direction:column;align-items:center;gap:8px;margin:18px 0 6px;color:var(--ink3)}
+.soc-foot-t{font:700 .74rem var(--body);letter-spacing:.06em;color:var(--ink3)}
+.soc-foot .soc-stks{justify-content:center}
+.soc-foot .soc-stk img{width:46px;height:46px}
