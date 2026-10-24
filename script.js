@@ -213,7 +213,7 @@ if (sphere) {
     var dir=cur&&order.indexOf(k)<order.indexOf(cur)?"prev":"next";
     if(push)history.pushState({b:k},"","#"+k);
     mark(k);
-    if(!from||reduce){if(from)from.hidden=true;to.hidden=false;cur=k;window.samaPack&&window.samaPack();if(!from)stagger(to);window.scrollTo(0,0);return;}
+    if(!from||reduce){Object.keys(boards).forEach(function(n){if(n!==k)boards[n].hidden=true;});to.hidden=false;cur=k;window.samaPack&&window.samaPack();if(!from)stagger(to);window.scrollTo(0,0);return;}
     busy=true;
     from.classList.add("out-"+dir);
     setTimeout(function(){
@@ -222,7 +222,7 @@ if (sphere) {
       to.hidden=false;to.classList.add("in-"+dir);
       window.samaPack&&window.samaPack();stagger(to);
       requestAnimationFrame(function(){requestAnimationFrame(function(){to.classList.add("in-go");});});
-      setTimeout(function(){to.classList.remove("in-"+dir,"in-go");busy=false;cur=k;},480);
+      setTimeout(function(){to.classList.remove("in-"+dir,"in-go");Object.keys(boards).forEach(function(n){if(n!==k)boards[n].hidden=true;});busy=false;cur=k;},480);
       cur=k;
     },300);
   }
