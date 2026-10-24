@@ -25,7 +25,7 @@ const DATA = {
   }
 };
 /* ========================================================= */
-const C1 = "#ffd2ad", C2 = "#f4a6b8", C3 = "#b9d4ff", C4 = "#c8f0c0", TRACK = "rgba(255,255,255,.16)";
+const C1 = "#E0553B", C2 = "#C99A3E", C3 = "#3F7FC1", C4 = "#4E8C5E", TRACK = "rgba(27,36,64,.16)";
 const svg = (w, h, inner, label) => `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${label || ""}" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`;
 function donut(parts, center, sub, label) {
   const total = parts.reduce((a, p) => a + p[1], 0), r = 40, cx = 60, cy = 60;
@@ -51,11 +51,11 @@ const R = {
     const { labels, values, suffix } = DATA.pos, w = 300, h = 150, p = 22, top = 18, base = h - 22, max = Math.max(...values) * 1.1;
     const x = i => p + i * (w - 2 * p) / (values.length - 1), y = v => base - v / max * (base - top);
     const d = values.map((v, i) => `${i ? "L" : "M"}${x(i)},${y(v)}`).join(" ");
-    const grid = [0.25, 0.5, 0.75].map(f => `<line x1="${p}" x2="${w - p}" y1="${base - f * (base - top)}" y2="${base - f * (base - top)}" stroke="rgba(255,255,255,.1)"/>`).join("");
+    const grid = [0.25, 0.5, 0.75].map(f => `<line x1="${p}" x2="${w - p}" y1="${base - f * (base - top)}" y2="${base - f * (base - top)}" stroke="rgba(27,36,64,.1)"/>`).join("");
     return svg(w, h, `<defs><linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${C1}" stop-opacity=".5"/><stop offset="1" stop-color="${C1}" stop-opacity="0"/></linearGradient></defs>
       ${grid}<path d="${d} L${x(values.length - 1)},${base} L${x(0)},${base}Z" fill="url(#pg)" class="fade"/>
-      <path d="${d}" fill="none" stroke="#fff" stroke-width="2.5" stroke-linejoin="round" pathLength="1" class="draw"/>
-      ${values.map((v, i) => `<g class="fade"><circle cx="${x(i)}" cy="${y(v)}" r="4" fill="#fff"/><text x="${x(i)}" y="${y(v) - 9}" text-anchor="middle" class="s">${v}${i === values.length - 1 ? suffix : ""}</text></g><text x="${x(i)}" y="${h - 6}" text-anchor="middle" class="s">${labels[i]}</text>`).join("")}`, "POS locations by month");
+      <path d="${d}" fill="none" stroke="#1B2440" stroke-width="2.5" stroke-linejoin="round" pathLength="1" class="draw"/>
+      ${values.map((v, i) => `<g class="fade"><circle cx="${x(i)}" cy="${y(v)}" r="4" fill="#1B2440"/><text x="${x(i)}" y="${y(v) - 9}" text-anchor="middle" class="s">${v}${i === values.length - 1 ? suffix : ""}</text></g><text x="${x(i)}" y="${h - 6}" text-anchor="middle" class="s">${labels[i]}</text>`).join("")}`, "POS locations by month");
   },
   inspect() {
     const { score, max } = DATA.inspection;
@@ -64,24 +64,24 @@ const R = {
   },
   tiktok() {
     const { gained, axisMax } = DATA.tiktok, w = 300, L = 10, Wd = w - 20, ticks = [0, .25, .5, .75, 1];
-    return svg(w, 92, `${ticks.map(t => `<line x1="${L + t * Wd}" x2="${L + t * Wd}" y1="14" y2="58" stroke="rgba(255,255,255,.14)"/><text x="${L + t * Wd}" y="74" text-anchor="middle" class="s">${Math.round(t * axisMax).toLocaleString()}</text>`).join("")}
+    return svg(w, 92, `${ticks.map(t => `<line x1="${L + t * Wd}" x2="${L + t * Wd}" y1="14" y2="58" stroke="rgba(27,36,64,.14)"/><text x="${L + t * Wd}" y="74" text-anchor="middle" class="s">${Math.round(t * axisMax).toLocaleString()}</text>`).join("")}
       <rect x="${L}" y="24" width="${Wd}" height="24" rx="12" fill="${TRACK}"/>
       <rect x="${L}" y="24" width="${gained / axisMax * Wd}" height="24" rx="12" fill="${C2}" class="grow"/>
-      <text x="${L + 10}" y="41" class="s" fill="#3a2420" style="fill:#3a2420;font-weight:600">~${gained.toLocaleString()} followers gained</text>
+      <text x="${L + 10}" y="41" class="s" fill="#FFFCF6" style="fill:#FFFCF6;font-weight:600">~${gained.toLocaleString()} followers gained</text>
       <text x="${w / 2}" y="90" text-anchor="middle" class="s">Followers (approx.)</text>`, "TikTok followers gained bar chart");
   },
   team() {
     const n = DATA.team, w = 300, top = 26, lev = 96, xs = i => 24 + i * (w - 48) / (n - 1);
-    const lines = Array.from({ length: n }, (_, i) => `<path d="M150 ${top + 18} V64 H${xs(i)} V${lev - 14}" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.4" pathLength="1" class="draw" style="animation-delay:${.2 + i * .06}s"/>`).join("");
-    const nodes = Array.from({ length: n }, (_, i) => `<g class="fade" style="animation-delay:${.6 + i * .06}s"><circle cx="${xs(i)}" cy="${lev}" r="13" fill="rgba(255,255,255,.16)" stroke="${C1}"/><circle cx="${xs(i)}" cy="${lev - 4}" r="3.6" fill="#fff"/><path d="M${xs(i) - 6} ${lev + 7}a6 5 0 0 1 12 0z" fill="#fff"/></g>`).join("");
-    return svg(w, 124, `${lines}<rect x="104" y="${top - 16}" width="92" height="34" rx="17" fill="${C1}"/><text x="150" y="${top + 5}" text-anchor="middle" class="t" style="fill:#3a2420;font-size:13px">Joshua</text>${nodes}
+    const lines = Array.from({ length: n }, (_, i) => `<path d="M150 ${top + 18} V64 H${xs(i)} V${lev - 14}" fill="none" stroke="rgba(27,36,64,.5)" stroke-width="1.4" pathLength="1" class="draw" style="animation-delay:${.2 + i * .06}s"/>`).join("");
+    const nodes = Array.from({ length: n }, (_, i) => `<g class="fade" style="animation-delay:${.6 + i * .06}s"><circle cx="${xs(i)}" cy="${lev}" r="13" fill="rgba(27,36,64,.16)" stroke="${C1}"/><circle cx="${xs(i)}" cy="${lev - 4}" r="3.6" fill="#1B2440"/><path d="M${xs(i) - 6} ${lev + 7}a6 5 0 0 1 12 0z" fill="#1B2440"/></g>`).join("");
+    return svg(w, 124, `${lines}<rect x="104" y="${top - 16}" width="92" height="34" rx="17" fill="${C1}"/><text x="150" y="${top + 5}" text-anchor="middle" class="t" style="fill:#FFFCF6;font-size:13px">Joshua</text>${nodes}
       <text x="150" y="122" text-anchor="middle" class="s">${n} team members · Assistant Store Manager</text>`, "Org chart: Joshua supervising 7");
   },
   range() {
     const { min, max } = DATA.hardware, w = 240, s = v => 14 + v / 6000 * (w - 28);
     return svg(w, 80, `<line x1="14" x2="${w - 14}" y1="34" y2="34" stroke="${TRACK}" stroke-width="10" stroke-linecap="round"/>
       <line x1="${s(min)}" x2="${s(max)}" y1="34" y2="34" stroke="${C1}" stroke-width="10" stroke-linecap="round" pathLength="1" class="draw"/>
-      <circle cx="${s(min)}" cy="34" r="7" fill="#fff" class="fade"/><circle cx="${s(max)}" cy="34" r="7" fill="#fff" class="fade"/>
+      <circle cx="${s(min)}" cy="34" r="7" fill="#1B2440" class="fade"/><circle cx="${s(max)}" cy="34" r="7" fill="#1B2440" class="fade"/>
       <text x="${s(min)}" y="18" text-anchor="middle" class="s">$1,000</text><text x="${s(max)}" y="18" text-anchor="middle" class="s">$5,000</text>
       <text x="14" y="62" class="s">$0</text><text x="${w - 14}" y="62" text-anchor="end" class="s">$6,000</text>`, "Hardware cost range per location");
   },
@@ -96,7 +96,7 @@ const R = {
     return svg(w, 96, `<text x="${L}" y="16" class="t">${done} <tspan class="s">of ${total} hours · ${Math.round(done / total * 100)}%</tspan></text>
       <rect x="${L}" y="28" width="${Wd}" height="22" rx="11" fill="${TRACK}"/>
       <g class="grow"><rect x="${L}" y="28" width="${s(uh)}" height="22" rx="11" fill="${C1}"/><rect x="${L + s(uh) - 11}" y="28" width="${s(lsc) + 11}" height="22" rx="11" fill="${C2}"/><rect x="${L + s(uh) - 11}" y="28" width="12" height="22" fill="${C1}"/></g>
-      ${[30, 60, 90].map(t => `<line x1="${L + s(t)}" x2="${L + s(t)}" y1="26" y2="52" stroke="rgba(255,255,255,.35)" stroke-dasharray="2 2"/><text x="${L + s(t)}" y="66" text-anchor="middle" class="s">${t}</text>`).join("")}
+      ${[30, 60, 90].map(t => `<line x1="${L + s(t)}" x2="${L + s(t)}" y1="26" y2="52" stroke="rgba(27,36,64,.35)" stroke-dasharray="2 2"/><text x="${L + s(t)}" y="66" text-anchor="middle" class="s">${t}</text>`).join("")}
       <text x="${L}" y="88" class="s">■ UH ${uh} hrs</text><text x="${L + 90}" y="88" class="s" style="fill:${C2}">■ Lone Star ${lsc} hrs</text><text x="${w - 8}" y="88" text-anchor="end" class="s">${total - done} to go</text>`, "Credit hours toward graduation");
   },
   games() {
@@ -124,7 +124,7 @@ function tickCounts() {
 tickCounts(); setInterval(tickCounts, 1000);
 /* clock in visitor's time zone */
 const clock = document.getElementById("clock");
-function tick() { const d = new Date(); clock.dateTime = d.toISOString(); clock.textContent = new Intl.DateTimeFormat(undefined, { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZoneName: "short" }).format(d); }
+function tick() { if (!clock) return; const d = new Date(); clock.dateTime = d.toISOString(); clock.textContent = new Intl.DateTimeFormat(undefined, { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZoneName: "short" }).format(d); }
 tick(); setInterval(tick, 15000);
 /* contact modal */
 const modal = document.getElementById("contact"); let lastFocus;
@@ -193,7 +193,7 @@ if (sphere) {
 
 // Single-page router: boards swap in place with a sideways slide; background never reloads.
 (function(){
-  var order=["professional","academic","personal","resume"];
+  var order=["home","professional","academic","personal","resume","overview"];
   var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
   var boards={};document.querySelectorAll(".board").forEach(function(b){boards[b.dataset.board]=b;});
   var cur=null,busy=false;
@@ -201,7 +201,7 @@ if (sphere) {
   function mark(k){document.querySelectorAll("[data-nav]").forEach(function(a){var on=a.dataset.nav===k&&a.classList.contains("tab");a.classList.toggle("active",on);if(on)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
     var b=boards[k];document.title=b.dataset.title.replace("&amp;","&")+" · Sama — Joshua Dotson";var f=document.getElementById("foot-title");if(f)f.innerHTML=b.dataset.title;document.body.dataset.page=k;}
   function show(k,push){
-    if(!boards[k])k="professional";
+    if(!boards[k]){ if(k.indexOf("/")>0&&window.samaOverview&&window.samaOverview(k)){k="overview";if(cur==="overview"){mark(k);stagger(boards[k]);window.scrollTo(0,0);return;}} else k="home"; }
     if(k===cur||busy)return;
     var from=cur?boards[cur]:null,to=boards[k];
     var dir=cur&&order.indexOf(k)<order.indexOf(cur)?"prev":"next";
@@ -226,8 +226,8 @@ if (sphere) {
     if(e.metaKey||e.ctrlKey||e.shiftKey)return;
     e.preventDefault();show(k,true);
   });
-  window.addEventListener("popstate",function(){show((location.hash||"#professional").slice(1),false);});
-  window.addEventListener("hashchange",function(){show((location.hash||"#professional").slice(1),false);});
-  show((location.hash||"#professional").slice(1),false);
+  window.addEventListener("popstate",function(){show((location.hash||"#home").slice(1),false);});
+  window.addEventListener("hashchange",function(){show((location.hash||"#home").slice(1),false);});
+  show((location.hash||"#home").slice(1),false);
   window.samaShow=show;
 })();
