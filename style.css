@@ -296,3 +296,8 @@ body.enter-prev main.dash{animation:samaInL .42s cubic-bezier(.22,.8,.24,1)}
 .dash .pdfview{width:fit-content!important;max-width:100%;justify-self:center;margin-inline:auto;padding:10px!important}.pdfview .pdf-pages{gap:10px!important}.pdfview .pdf-pages canvas{width:min(820px,calc(100vw - 60px))!important;max-width:none!important}
 .s8 .aw2{grid-template-columns:repeat(3,1fr)}@media (max-width:900px){.s8 .aw2{grid-template-columns:1fr}}
 .panel:has(>.awards:not(.aw2)){display:flex;flex-direction:column}.panel>.awards:not(.aw2){flex:1;grid-auto-rows:1fr}.panel>.awards:not(.aw2) li{justify-content:center}
+
+/* tight pack (pack.js) */
+.dash.packed{grid-auto-rows:2px;row-gap:0!important;align-items:start}
+.dash.packed>*{margin:0!important;align-self:start}
+.dash.packed>.pfill{align-self:stretch!important}

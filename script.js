@@ -164,28 +164,7 @@ if (sphere) {
 /* entrance */
 
 
-// Masonry packing: each panel spans rows equal to its content height, so no blank space or gaps.
-(function(){
-  function pack(){
-    var on=window.matchMedia('(min-width: 900px)').matches;
-    document.querySelectorAll('.dash').forEach(function(d){
-      if(d.hidden)return;
-      d.classList.toggle('masonry',on);
-      if(!on){Array.prototype.forEach.call(d.children,function(el){el.style.gridRow='';});return;}
-      Array.prototype.forEach.call(d.children,function(el){
-        el.style.gridRow='auto';el.style.alignSelf='';el.classList.remove('stretched');
-        var h=el.offsetHeight+16;
-        el.style.gridRow='span '+Math.ceil(h/2);
-      });
-      // Task 6 (Oct 24): no stretching. Each panel keeps its own content height, so cards carry no blank space inside.
-    });
-  }
-  var t;function later(){clearTimeout(t);t=setTimeout(pack,60);}
-  window.addEventListener('load',pack);window.addEventListener('resize',later);
-  document.querySelectorAll('.dash img').forEach(function(i){if(!i.complete)i.addEventListener('load',later);});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(pack);
-  window.samaPack=pack;pack();setTimeout(pack,900);setTimeout(pack,2000);
-})();
+// Masonry packing moved to pack.js (tight skyline packing, uniform gap).
 
 // Single-page router: boards swap in place with a sideways slide; background never reloads.
 // Bottom bar: "Last Updated: [time, date CT]" from the page's Last-Modified (the latest publish), always in Central Time.

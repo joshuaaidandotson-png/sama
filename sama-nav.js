@@ -16,7 +16,7 @@ export function mountNav(host,{groups,active,account,brandHref}){
     wm.addEventListener("click",ev=>{ if(matchMedia("(hover: hover)").matches) return; if(!brand.classList.contains("open")){ ev.preventDefault(); ev.stopPropagation(); brand.classList.add("open"); wm.setAttribute("aria-expanded","true"); } },true);
     if(!window.__snavDoc){ window.__snavDoc=true; document.addEventListener("click",ev=>{ document.querySelectorAll(".snav-brand.open").forEach(x=>{ if(!x.contains(ev.target)){ x.classList.remove("open"); x.querySelector(".snav-wm")?.setAttribute("aria-expanded","false"); } }); }); } }
   const nav=el("nav","snav-tabs"); nav.setAttribute("aria-label","Main");
-  groups.forEach(g=>{ const t=a(g.href,"snav-t"+(g.key===active?" on":""),star(),el("span","snav-e",g.emoji||""),el("span","snav-l",g.label),star());
+  groups.forEach(g=>{ const t=a(g.href,"snav-t"+(g.key===active?" on":""),el("span","snav-e",g.emoji||""),el("span","snav-l",g.label));
     if(g.key===active) t.setAttribute("aria-current","page"); nav.append(t); });
   const right=el("div","snav-r"); const clock=el("time","snav-clock"); right.append(clock);
   bar.append(brand,nav,right);
