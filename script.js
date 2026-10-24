@@ -188,6 +188,8 @@ if (sphere) {
 })();
 
 // Single-page router: boards swap in place with a sideways slide; background never reloads.
+// Bottom bar: "Last Updated: [time, date CT]" from the page's Last-Modified (the latest publish), always in Central Time.
+function samaLU(){ var d=new Date(document.lastModified); if(isNaN(d)) return "Last Updated: —"; var t=new Intl.DateTimeFormat("en-US",{timeZone:"America/Chicago",hour:"numeric",minute:"2-digit"}).format(d), dt=new Intl.DateTimeFormat("en-US",{timeZone:"America/Chicago",weekday:"short",month:"short",day:"numeric",year:"numeric"}).format(d); return "Last Updated: "+t+" CT, "+dt; }
 (function(){
   var order=["home","professional","academic","personal","resume","overview"];
   var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -195,7 +197,7 @@ if (sphere) {
   var cur=null,busy=false;
   function stagger(b){if(reduce)return;Array.prototype.forEach.call(b.children,function(el,i){el.classList.remove("rise");void el.offsetWidth;el.style.animationDelay=(80+i*55)+"ms";el.classList.add("rise");});}
   function mark(k){document.querySelectorAll("[data-nav]").forEach(function(a){var on=a.dataset.nav===k&&a.classList.contains("tab");a.classList.toggle("active",on);if(on)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
-    var b=boards[k];document.title=b.dataset.title.replace("&amp;","&")+" · Sama — Joshua Dotson";var f=document.getElementById("foot-title");if(f)f.innerHTML=b.dataset.title;document.body.dataset.page=k;document.dispatchEvent(new CustomEvent("sama:board"));}
+    var b=boards[k];document.title=b.dataset.title.replace("&amp;","&")+" · Sama — Joshua Dotson";var f=document.getElementById("foot-title");if(f)f.textContent=samaLU();document.body.dataset.page=k;document.dispatchEvent(new CustomEvent("sama:board"));}
   function show(k,push){
     if(!boards[k]){ if(k.indexOf("/")>0&&window.samaOverview&&window.samaOverview(k)){k="overview";if(cur==="overview"){mark(k);stagger(boards[k]);window.scrollTo(0,0);return;}}
       else { var pk=k.split("/"); if(boards[pk[0]]&&pk[1]!=null){ k=pk[0]; var same=k===cur; setTimeout(function(){window.samaScrollTo&&window.samaScrollTo(pk[0],pk[1]);},same?0:820); if(same) return; } else k="home"; } }
