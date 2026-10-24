@@ -177,16 +177,7 @@ if (sphere) {
         var h=el.offsetHeight+16;
         el.style.gridRow='span '+Math.ceil(h/2);
       });
-      // fill: grow each panel down to the next panel below it (or the board's bottom) so no gaps remain
-      var kids=Array.prototype.slice.call(d.children),R=kids.map(function(e){var t=e.offsetTop,l=e.offsetLeft;return {top:t,left:l,bottom:t+e.offsetHeight,right:l+e.offsetWidth};});
-      var maxB=Math.max.apply(null,R.map(function(r){return r.bottom;}));
-      kids.forEach(function(el,i){
-        var r=R[i],target=maxB;
-        R.forEach(function(o,j){if(j!==i&&o.top>=r.bottom-1&&o.left<r.right-1&&o.right>r.left+1)target=Math.min(target,o.top-16);});
-        var extra=target-r.bottom;
-        if(extra>2){var n=parseInt(el.style.gridRow.replace('span ',''),10)+Math.floor(extra/2);el.style.gridRow='span '+n;el.style.alignSelf='stretch';el.classList.add('stretched');}
-        else {el.style.alignSelf='';el.classList.remove('stretched');}
-      });
+      // Task 6 (Oct 24): no stretching. Each panel keeps its own content height, so cards carry no blank space inside.
     });
   }
   var t;function later(){clearTimeout(t);t=setTimeout(pack,60);}
