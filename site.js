@@ -1,5 +1,5 @@
 // Public site: shared Sama nav + landing clock/greeting + clickable panels -> overview pages. Public content only.
-import { mountNav, greeting } from "./sama-nav.js?v=18";
+import { mountNav, greeting } from "./sama-nav.js?v=19";
 const BOARDS=[["professional","💼","Professional"],["academic","📚","Academic"],["personal","🌸","Social"],["resume","📄","Résumé"]];
 const titleOf=p=>{const h=p.querySelector("h1,h3,.slabel,h2"); return h?h.textContent.trim().replace(/\s+/g," "):"";};
 const panels=k=>[...document.querySelectorAll(`.board[data-board="${k}"] > .panel`)];
@@ -33,3 +33,5 @@ document.querySelectorAll('.board[data-board]').forEach(b=>{ const M=WSTK_PUB[b.
   b.querySelectorAll("h3").forEach(h=>{ const ic=h.querySelector("svg.ic"); if(!ic) return; const k=M[h.textContent.trim()]; if(!k||used.has(k)) return; used.add(k);
     const im=document.createElement("img"); im.className="stk w-stk"; im.src="assets/stickers/w_"+k+".webp"; im.alt=""; im.width=34; im.height=34; ic.replaceWith(im); h.classList.add("w-h3"); });
   if(b.dataset.board!=="overview"&&b.dataset.board!=="resume"&&!b.querySelector(".soc-foot")){ const src=document.querySelector("#b-home .ha-btns")||document.querySelector(".soc-stks"); if(src){ const f=document.createElement("footer"); f.className="soc-foot s12"; const t=document.createElement("span"); t.className="soc-foot-t"; t.textContent="✦ Joshua-Sama · Christ Luvr ✦"; f.append(t,src.cloneNode(true)); b.append(f); } } });
+
+if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js",{scope:"./"}).catch(()=>{});
