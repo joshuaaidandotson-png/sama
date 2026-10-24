@@ -11,23 +11,28 @@
     if(!on||!kids.length)return;
     var W=g.clientWidth-parseFloat(getComputedStyle(g).paddingLeft||0)-parseFloat(getComputedStyle(g).paddingRight||0);
     var colW=(W-11*gap)/12,G=Math.round(gap/2),bot=[0,0,0,0,0,0,0,0,0,0,0,0],P=[];
-    kids.forEach(function(e){
+    var Q=kids.map(function(e){
       var cs=getComputedStyle(e),ce=cs.gridColumnEnd,cst=cs.gridColumnStart,w;
       if(/^span \d+/.test(ce))w=parseInt(ce.slice(5),10);else if(/^span \d+/.test(cst))w=parseInt(cst.slice(5),10);else if(ce==="-1")w=12;
       else w=Math.round((e.getBoundingClientRect().width+gap)/(colW+gap));
-      w=Math.max(1,Math.min(12,w||12));
-      var h=Math.max(1,Math.ceil(e.getBoundingClientRect().height/2));
-      var best=null;
-      for(var c=0;c+w<=12;c++){var t=0,i;for(i=c;i<c+w;i++)t=Math.max(t,bot[i]);var waste=0;for(i=c;i<c+w;i++)waste+=t-bot[i];var sc=t+waste*0.6/w;if(!best||sc<best.sc-0.01)best={c:c,t:t,sc:sc};}
-      for(var j=best.c;j<best.c+w;j++)bot[j]=best.t+h+G;
-      P.push({e:e,c:best.c,w:w,t:best.t,h:h});
+      return {e:e,w:Math.max(1,Math.min(12,w||12)),h:Math.max(1,Math.ceil(e.getBoundingClientRect().height/2))};
     });
+    function spot(it){var best=null;for(var c=0;c+it.w<=12;c++){var t=0,i;for(i=c;i<c+it.w;i++)t=Math.max(t,bot[i]);var waste=0;for(i=c;i<c+it.w;i++)waste+=t-bot[i];var sc=t+waste*0.6/it.w;if(!best||sc<best.sc-0.01)best={c:c,t:t,sc:sc,waste:waste};}return best;}
+    while(Q.length){
+      var k=0,b0=spot(Q[0]);
+      if(b0.waste>0){ /* pull a later, narrower card forward if it can sit higher (fills the low columns first) */
+        for(var q=1;q<Math.min(Q.length,8);q++){if(Q[q].w>=Q[0].w)continue;var bq=spot(Q[q]);if(bq.t<b0.t&&bq.t+Q[q].h+G<=b0.t+Q[q].h){k=q;break;}}
+      }
+      var it=Q.splice(k,1)[0],best=spot(it);
+      for(var j=best.c;j<best.c+it.w;j++)bot[j]=best.t+it.h+G;
+      P.push({e:it.e,c:best.c,w:it.w,t:best.t,h:it.h});
+    }
     var maxB=Math.max.apply(null,P.map(function(p){return p.t+p.h;}));
     P.forEach(function(p){
       var tgt=null;
       P.forEach(function(o){if(o!==p&&o.t>=p.t+p.h&&o.c<p.c+p.w&&o.c+o.w>p.c){var b=o.t-G;if(tgt===null||b<tgt)tgt=b;}});
       if(tgt===null)tgt=(maxB-(p.t+p.h)<=70)?maxB:p.t+p.h; /* even the bottom edge when close */
-      if(tgt-(p.t+p.h)>0&&tgt-(p.t+p.h)<=110){p.h=tgt-p.t;p.e.classList.add("pfill");}
+      if(tgt-(p.t+p.h)>0){p.h=tgt-p.t;p.e.classList.add("pfill");}
     });
     P.forEach(function(p){p.e.style.gridColumn=(p.c+1)+" / span "+p.w;p.e.style.gridRow=(p.t+1)+" / span "+p.h;});
   }
