@@ -1,6 +1,6 @@
 // Public site: shared Sama nav + landing clock/greeting + clickable panels -> overview pages. Public content only.
 import { mountNav, greeting } from "./sama-nav.js?v=7";
-const BOARDS=[["home","🏯","Home"],["professional","💼","Professional"],["academic","📚","Academic"],["personal","🌸","Personal & Social"],["resume","📄","Résumé"]];
+const BOARDS=[["home","🏯","Home"],["professional","💼","Professional"],["academic","📚","Academic"],["personal","🌸","Social"],["resume","📄","Résumé"]];
 const titleOf=p=>{const h=p.querySelector("h1,h3,.slabel,h2"); return h?h.textContent.trim().replace(/\s+/g," "):"";};
 const panels=k=>[...document.querySelectorAll(`.board[data-board="${k}"] > .panel`)];
 function groups(){ return BOARDS.map(([k,emo,label])=>({key:k,label,emoji:emo,href:"#"+k,
