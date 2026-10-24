@@ -1,12 +1,12 @@
 // Public site: shared Sama nav + landing clock/greeting + clickable panels -> overview pages. Public content only.
-import { mountNav, greeting } from "./sama-nav.js?v=10";
+import { mountNav, greeting } from "./sama-nav.js?v=11";
 const BOARDS=[["professional","💼","Professional"],["academic","📚","Academic"],["personal","🌸","Social"],["resume","📄","Résumé"]];
 const titleOf=p=>{const h=p.querySelector("h1,h3,.slabel,h2"); return h?h.textContent.trim().replace(/\s+/g," "):"";};
 const panels=k=>[...document.querySelectorAll(`.board[data-board="${k}"] > .panel`)];
 function groups(){ return BOARDS.map(([k,emo,label])=>({key:k,label,emoji:emo,href:"#"+k,
   subs:panels(k).map((p,i)=>({p,i,t:titleOf(p)})).filter(x=>x.t&&!x.p.classList.contains("photo-card")).slice(0,12).map(x=>({href:`#${k}/${x.i}`,emoji:detailOf(k,x.p)?"📖":"✦",label:x.t.length>34?x.t.slice(0,32)+"…":x.t}))})); }
 const host=document.getElementById("sama-nav");
-const draw=()=>{ const h=(document.body.dataset.page||(location.hash||"#home").slice(1).split("/")[0]); mountNav(host,{groups:[],active:h==="overview"?(location.hash.slice(1).split("/")[0]):h,brandHref:"#home",account:{label:"Login",emoji:"🔑",href:"https://sama-studios.web.app/login"}}); };
+const draw=()=>{ const h=(document.body.dataset.page||(location.hash||"#home").slice(1).split("/")[0]); mountNav(host,{groups:groups(),active:h==="overview"?(location.hash.slice(1).split("/")[0]):h,brandHref:"#home",account:{label:"Login",emoji:"🔑",href:"https://sama-studios.web.app/login"}}); };
 // Only panels with real extra detail open a page (Jobs → full role history). Everything else is a plain card.
 const DETAIL={"professional":{"Jobs":"detail-jobs"}};
 const detailOf=(k,p)=>(DETAIL[k]||{})[titleOf(p)];
@@ -24,7 +24,7 @@ window.samaScrollTo=function(k,i){ const p=panels(k)[+i]; if(!p) return; p.scrol
 // greeting (the only clock is the one in the top bar)
 const hg=document.getElementById("home-greet"); const tick=()=>{ if(hg) hg.textContent=greeting(new Date()); }; tick(); setInterval(tick,60000);
 draw(); addEventListener("hashchange",draw); document.addEventListener("sama:board",draw);
-// round5: no page tabs in the bar; boards are opened from these tiles instead
+// page tabs restored in the bar (Oct 24, reverses round-5 item 14); tiles kept as on-page shortcuts
 const BLURB={professional:"Jobs, skills & projects",academic:"UH, GPA & courses",personal:"Faith, games & socials",resume:"Full résumé PDF"};
 function tiles(cur){ const s=document.createElement("nav"); s.className="glass panel s12 board-tiles"; s.setAttribute("aria-label","Boards");
   [["home","🏠","Home"],...BOARDS].filter(b=>b[0]!==cur&&!(cur==="home"&&b[0]==="home")).forEach(([k,emo,l])=>{ const a=document.createElement("a"); a.href="#"+k; const e1=document.createElement("span"); e1.className="bt-e"; e1.textContent=emo; const t=document.createElement("span"); t.textContent=l; const sm=document.createElement("small"); sm.textContent=k==="home"?"Back to the start":BLURB[k]; t.append(sm); a.append(e1,t); s.append(a); }); return s; }
