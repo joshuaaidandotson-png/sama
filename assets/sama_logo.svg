@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="1200" height="360"><title>Sama Studios</title>
+<rect width="1200" height="360" rx="60" fill="#FBF7EE"/>
+<g transform="translate(60,52) scale(.5)">
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1F2A4D"/><stop offset="1" stop-color="#141C36"/></linearGradient>
+<linearGradient id="s" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7C65E"/><stop offset="1" stop-color="#F2A33A"/></linearGradient></defs>
+<rect width="512" height="512" rx="112" fill="url(#g)"/>
+<rect x="22" y="22" width="468" height="468" rx="94" fill="none" stroke="#FBF7EE" stroke-opacity=".14" stroke-width="6"/>
+<path d="M256.00 76.00 Q292.77 225.23 442.00 262.00 Q292.77 298.77 256.00 448.00 Q219.23 298.77 70.00 262.00 Q219.23 225.23 256.00 76.00 Z" fill="#FBF7EE" stroke="#FBF7EE" stroke-width="34" stroke-linejoin="round"/>
+<path d="M256.00 76.00 Q292.77 225.23 442.00 262.00 Q292.77 298.77 256.00 448.00 Q219.23 298.77 70.00 262.00 Q219.23 225.23 256.00 76.00 Z" fill="url(#s)"/>
+<path d="M392.00 82.00 Q401.19 118.81 438.00 128.00 Q401.19 137.19 392.00 174.00 Q382.81 137.19 346.00 128.00 Q382.81 118.81 392.00 82.00 Z" fill="#E85D3F"/><path d="M128.00 376.00 Q133.66 396.34 154.00 402.00 Q133.66 407.66 128.00 428.00 Q122.34 407.66 102.00 402.00 Q122.34 396.34 128.00 376.00 Z" fill="#F6C9D0"/>
+</g>
+<text x="350" y="205" font-family="Fraunces, Georgia, serif" font-style="italic" font-weight="900" font-size="150" fill="#141C36" letter-spacing="-3">Sama</text>
+<text x="356" y="282" font-family="Inter, sans-serif" font-weight="700" font-size="44" fill="#E85D3F" letter-spacing="14">STUDIOS</text>
+<text x="700" y="282" font-family="'Zen Kaku Gothic New', sans-serif" font-weight="700" font-size="40" fill="#C99A3E">サマ · スタジオ</text>
+<path d="M860.00 86.00 Q869.19 120.81 904.00 130.00 Q869.19 139.19 860.00 174.00 Q850.81 139.19 816.00 130.00 Q850.81 120.81 860.00 86.00 Z" fill="#F2B33D"/><path d="M940.00 58.00 Q944.95 75.05 962.00 80.00 Q944.95 84.95 940.00 102.00 Q935.05 84.95 918.00 80.00 Q935.05 75.05 940.00 58.00 Z" fill="#7FB2E5"/><path d="M1010.00 134.00 Q1013.54 146.46 1026.00 150.00 Q1013.54 153.54 1010.00 166.00 Q1006.46 153.54 994.00 150.00 Q1006.46 146.46 1010.00 134.00 Z" fill="#8DBF8B"/>
+</svg>

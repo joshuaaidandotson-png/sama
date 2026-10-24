@@ -114,7 +114,7 @@ a:focus-visible,button:focus-visible,.panel:focus-visible{outline:3px solid var(
 /* Stars as bullets everywhere */
 ul.list,.interests ul,.hl-list{list-style:none;padding-left:0}
 ul.list > li,.interests ul > li{position:relative;padding-left:1.35em}
-ul.list > li::before,.interests ul > li::before{content:"★";position:absolute;left:0;top:.05em;color:var(--gold);font-size:.85em}
+ul.list > li::before,.interests ul > li::before{content:"✦";position:absolute;left:0;top:.05em;color:var(--gold);font-size:.85em}
 /* Theme follows macOS (light / dark) */
 /* round5: light mode only (no dark theme) */
 :root{color-scheme:light}
@@ -143,10 +143,10 @@ ul.list > li::before,.interests ul > li::before{content:"★";position:absolute;
 @media (max-width:860px){.board-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:860px){.home-hero .hh-stk3{display:none}.home-hero .hh-stk{top:10px!important;bottom:auto!important;right:10px!important;width:58px!important}.home-hero .hh-stk2{display:none}}
 
-/* stars_care: job duty lists and goals use the same ★ bullet */
+/* stars_care: job duty lists and goals use the same ✦ bullet */
 .jd-a > li{list-style:none;position:relative;padding-left:1.9em}ol.list > li{list-style:none;position:relative;padding-left:1.35em}
-.jd-a > li::before{content:"★";position:absolute;left:10px;top:8px;color:var(--gold);font-size:.85em}
-ol.list{padding-left:0}ol.list > li::before{content:"★";position:absolute;left:0;top:.05em;color:var(--gold);font-size:.85em}
+.jd-a > li::before{content:"✦";position:absolute;left:10px;top:8px;color:var(--gold);font-size:.85em}
+ol.list{padding-left:0}ol.list > li::before{content:"✦";position:absolute;left:0;top:.05em;color:var(--gold);font-size:.85em}
 /* Stickers like the private side */
 h3.w-h3{display:flex;align-items:center;gap:8px}
 h3.w-h3 img.stk.w-stk{position:static;width:34px;height:34px;flex:none;transform:rotate(-8deg)}

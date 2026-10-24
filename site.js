@@ -1,12 +1,11 @@
 // Public site: shared Sama nav + landing clock/greeting + clickable panels -> overview pages. Public content only.
-import { mountNav, greeting } from "./sama-nav.js?v=14";
+import { mountNav, greeting } from "./sama-nav.js?v=16";
 const BOARDS=[["professional","💼","Professional"],["academic","📚","Academic"],["personal","🌸","Social"],["resume","📄","Résumé"]];
 const titleOf=p=>{const h=p.querySelector("h1,h3,.slabel,h2"); return h?h.textContent.trim().replace(/\s+/g," "):"";};
 const panels=k=>[...document.querySelectorAll(`.board[data-board="${k}"] > .panel`)];
-function groups(){ return BOARDS.map(([k,emo,label])=>({key:k,label,emoji:emo,href:"#"+k,
-  subs:panels(k).map((p,i)=>({p,i,t:titleOf(p)})).filter(x=>x.t&&!x.p.classList.contains("photo-card")).slice(0,12).map(x=>({href:`#${k}/${x.i}`,emoji:detailOf(k,x.p)?"📖":"✦",label:x.t.length>34?x.t.slice(0,32)+"…":x.t}))})); }
+function groups(){ return BOARDS.map(([k,emo,label])=>({key:k,label,emoji:emo,href:"#"+k})); }
 const host=document.getElementById("sama-nav");
-const draw=()=>{ const h=(document.body.dataset.page||(location.hash||"#home").slice(1).split("/")[0]); mountNav(host,{groups:groups(),active:h==="overview"?(location.hash.slice(1).split("/")[0]):h,brandHref:"#home",noMenus:true,account:{label:"Login",emoji:"🔑",href:"https://sama-studios.web.app/login"}}); };
+const draw=()=>{ const h=(document.body.dataset.page||(location.hash||"#home").slice(1).split("/")[0]); mountNav(host,{groups:groups(),active:h==="overview"?(location.hash.slice(1).split("/")[0]):h,brandHref:"#home",account:{label:"Login",emoji:"🔑",href:"https://sama-studios.web.app/login"}}); };
 // Only panels with real extra detail open a page (Jobs → full role history). Everything else is a plain card.
 const DETAIL={"professional":{"Jobs":"detail-jobs"}};
 const detailOf=(k,p)=>(DETAIL[k]||{})[titleOf(p)];
@@ -33,4 +32,4 @@ const WSTK_PUB={professional:{"Jobs":"briefcase","Internships":"handshake","Skil
 document.querySelectorAll('.board[data-board]').forEach(b=>{ const M=WSTK_PUB[b.dataset.board]||{}; const used=new Set();
   b.querySelectorAll("h3").forEach(h=>{ const ic=h.querySelector("svg.ic"); if(!ic) return; const k=M[h.textContent.trim()]; if(!k||used.has(k)) return; used.add(k);
     const im=document.createElement("img"); im.className="stk w-stk"; im.src="assets/stickers/w_"+k+".webp"; im.alt=""; im.width=34; im.height=34; ic.replaceWith(im); h.classList.add("w-h3"); });
-  if(b.dataset.board!=="overview"&&!b.querySelector(".soc-foot")){ const src=document.querySelector(".soc-stks"); if(src){ const f=document.createElement("footer"); f.className="soc-foot s12"; const t=document.createElement("span"); t.className="soc-foot-t"; t.textContent="★ Joshua-Sama · Christ Luvr ★"; f.append(t,src.cloneNode(true)); b.append(f); } } });
+  if(b.dataset.board!=="overview"&&!b.querySelector(".soc-foot")){ const src=document.querySelector(".soc-stks"); if(src){ const f=document.createElement("footer"); f.className="soc-foot s12"; const t=document.createElement("span"); t.className="soc-foot-t"; t.textContent="✦ Joshua-Sama · Christ Luvr ✦"; f.append(t,src.cloneNode(true)); b.append(f); } } });

@@ -10,62 +10,30 @@
 .snav{position:sticky;top:12px;z-index:50;max-width:1240px;margin:12px auto 22px;display:flex;align-items:center;gap:10px;padding:7px 10px 7px 22px;border-radius:999px;
   background:rgba(20,28,54,.94);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);color:#fff;box-shadow:0 14px 36px -14px rgba(20,28,54,.55),inset 0 1px 0 rgba(255,255,255,.1);font-family:var(--body)}
 .snav a{color:inherit;text-decoration:none}
-.snav-brand{position:relative;flex-shrink:0}
-.snav-wm{display:block;font-family:var(--display);font-style:italic;font-weight:900;font-size:1.3rem;letter-spacing:-.02em;padding:6px 6px 6px 0;white-space:nowrap}
-.snav-wm::before,.snav-wm::after{content:"★";font-style:normal;font-family:var(--body);font-size:.62em;vertical-align:middle;color:var(--marigold,#F2B33D)}.snav-wm::before{margin-right:6px}.snav-wm::after{margin-left:6px}
+/* Public bar: plain links only. No hover menus, no dropdowns, no burger. */
+.snav-wm{display:block;flex-shrink:0;font-family:var(--display);font-style:italic;font-weight:900;font-size:1.3rem;letter-spacing:-.02em;padding:6px 6px 6px 0;white-space:nowrap;transition:transform .28s cubic-bezier(.22,.8,.24,1)}
+.snav-wm::before,.snav-wm::after{content:"\2726";font-style:normal;font-family:var(--body);font-size:.62em;vertical-align:middle;color:var(--marigold,#F2B33D)}.snav-wm::before{margin-right:6px}.snav-wm::after{margin-left:6px}
+.snav-wm.on{background:#fff;color:var(--navy);border-radius:999px;padding:6px 14px}
 .snav-tabs{display:flex;gap:2px;flex:1;justify-content:center;flex-wrap:nowrap;min-width:0}
-.snav-g{position:relative;display:flex;align-items:center}
-.snav-t{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;font-weight:600;font-size:.86rem;color:rgba(255,255,255,.78);transition:background .2s,color .2s;white-space:nowrap}
-.snav-t:hover,.snav-g.hov>.snav-t,.snav-t:focus-visible{color:#fff;background:rgba(255,255,255,.1)}
-.snav-g.on>.snav-t{background:#fff;color:var(--navy)}
+.snav-t{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;font-weight:600;font-size:.86rem;color:rgba(255,255,255,.78);white-space:nowrap;transition:background .28s cubic-bezier(.22,.8,.24,1),color .28s,transform .28s cubic-bezier(.22,.8,.24,1),box-shadow .28s}
+.snav-t:hover,.snav-t:focus-visible{color:#fff;background:rgba(255,255,255,.1)}
+.snav-t.on{background:#fff;color:var(--navy)}
 .snav-e{font-size:.95rem}
-.snav-x{display:none}
-.snav-menu{position:absolute;top:calc(100% + 10px);left:50%;min-width:220px;padding:8px;border-radius:18px;background:var(--surface);color:var(--ink);box-shadow:var(--sh3),0 0 0 1px var(--line);
-  opacity:0;visibility:hidden;transform:translate(-50%,-6px);transition:opacity .18s,transform .22s var(--spring),visibility .18s;z-index:60}
-.snav-menu::before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px}
-.snav-g.hov>.snav-menu,.snav-brand.hov>.snav-menu{opacity:1;visibility:visible;transform:translate(-50%,0)}
-.snav-bmenu{left:0;transform:translate(0,-6px);min-width:180px}.snav-brand.hov>.snav-bmenu{transform:translate(0,0)}
-.snav-mi{display:flex;align-items:center;gap:10px;width:100%;padding:9px 12px;border-radius:12px;font:600 .88rem var(--body);color:var(--ink);background:none;border:0;cursor:pointer;text-align:left}
-.snav-mi:hover,.snav-mi:focus-visible{background:var(--bg)}
+.snav-star{flex:none;font-size:.72em;line-height:1;color:var(--marigold,#F2B33D)}.snav-t.on .snav-star{color:var(--gold,#C99A3E)}
 .snav-r{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .snav-clock{font-size:.8rem;color:rgba(255,255,255,.75);padding:0 8px;white-space:nowrap;font-variant-numeric:tabular-nums}
-.snav-set{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.08);transition:background .2s,transform .3s var(--spring)}
-.snav-set:hover{background:rgba(255,255,255,.18);transform:rotate(40deg)}.snav-set.on{background:#fff}
-.snav-burger{display:none;width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.1);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:4px}
-.snav-burger span{display:block;width:18px;height:2px;border-radius:2px;background:#fff;transition:transform .25s}
-.snav :focus-visible{outline:3px solid var(--marigold);outline-offset:2px}
-@media (max-width:1180px){.snav-l{display:none}.snav-g.on .snav-l{display:inline}.snav-t{padding:8px 10px}}
-@media (max-width:860px){
-  .snav{top:8px;margin:8px 10px 16px;flex-wrap:wrap;border-radius:26px;padding:6px 6px 6px 18px}
-  .snav-tabs{order:5;flex-basis:100%;display:none;flex-direction:column;gap:2px;padding:6px 2px 8px;max-height:70vh;overflow:auto}
-  .snav.menu-open .snav-tabs{display:flex}
-  .snav-burger{display:flex}.snav.menu-open .snav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}.snav.menu-open .snav-burger span:nth-child(2){opacity:0}.snav.menu-open .snav-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
-  .snav-r{margin-left:auto}.snav-clock{font-size:.74rem;padding:0 4px}
-  .snav-g{flex-wrap:wrap}.snav-t{flex:1;padding:12px 14px;font-size:1rem}.snav-l{display:inline!important}
-  .snav-x{display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,.08);color:#fff;font-size:1rem;cursor:pointer;transition:transform .25s}
-  .snav-g.open .snav-x{transform:rotate(180deg)}
-  .snav-menu,.snav-g.hov>.snav-menu{position:static;transform:none;opacity:1;visibility:visible;display:none;flex-basis:100%;min-width:0;margin:2px 0 6px;background:rgba(255,255,255,.06);box-shadow:none;color:#fff}
-  .snav-g.open>.snav-menu{display:block}.snav-g .snav-mi{color:#fff}.snav-g .snav-mi:hover{background:rgba(255,255,255,.1)}
-  .snav-bmenu,.snav-brand.hov>.snav-bmenu{position:absolute;display:block;opacity:0;visibility:hidden;color:var(--ink);background:var(--surface)}
-  .snav-brand:focus-within>.snav-bmenu,.snav-brand.hov>.snav-bmenu{opacity:1;visibility:visible;transform:none;box-shadow:var(--sh3)}
-}
-@media (max-width:420px){.snav-clock{display:none}}
-.snav-accm{display:none}
-@media (max-width:860px){.snav-accm{display:flex;border-top:1px solid var(--navy-line);margin-top:6px;padding-top:6px}}
-html{background:var(--bg)}
-
-/* hover lift (restored from the original tabs) + brand as the active Home item */
-.snav-t{transition:background .28s cubic-bezier(.22,.8,.24,1),color .28s,transform .28s cubic-bezier(.22,.8,.24,1),box-shadow .28s}
-@media (hover:hover){.snav-t:hover{transform:translateY(-2px) scale(1.05);box-shadow:0 0 16px rgba(255,210,173,.3)}.snav-wm{transition:transform .28s cubic-bezier(.22,.8,.24,1)}.snav-wm:hover{transform:scale(1.04)}}
-.snav-brand.on .snav-wm{background:#fff;color:var(--navy);border-radius:999px;padding:6px 14px}
-@media (prefers-reduced-motion:reduce){.snav-t:hover,.snav-wm:hover{transform:none}}
-
-/* stars_care: every dropdown page item uses the public ★ bullet */
-.snav-star{flex:none;width:1em;text-align:center;color:var(--gold,#C99A3E);font-size:.85em;line-height:1}
-@media (max-width:860px){.snav-g .snav-star{color:var(--marigold,#F2A33A)}}
-
-/* Public: no hover/dropdown menus at all (Joshua, Oct 24). Tabs are plain links. */
-.snav.no-menus .snav-menu,.snav.no-menus .snav-x{display:none!important}
 .snav-login{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;font:600 .84rem var(--body);color:#fff;background:rgba(255,255,255,.1);text-decoration:none;white-space:nowrap}
 .snav-login:hover{background:rgba(255,255,255,.2)}
-@media (max-width:860px){.snav.no-menus .snav-login{display:none}}
+.snav :focus-visible{outline:3px solid var(--marigold);outline-offset:2px}
+@media (hover:hover){.snav-t:hover{transform:translateY(-2px) scale(1.05);box-shadow:0 0 16px rgba(255,210,173,.3)}.snav-wm:hover{transform:scale(1.04)}}
+@media (prefers-reduced-motion:reduce){.snav-t:hover,.snav-wm:hover{transform:none}}
+@media (max-width:1180px){.snav-l{display:none}.snav-t.on .snav-l{display:inline}.snav-t{padding:8px 10px}}
+/* phone: every tab stays visible as a plain link (wrapped row), nothing to open */
+@media (max-width:860px){
+  .snav{top:8px;margin:8px 10px 16px;flex-wrap:wrap;border-radius:26px;padding:8px 10px 8px 16px}
+  .snav-r{margin-left:auto}.snav-clock{font-size:.74rem;padding:0 4px}
+  .snav-tabs{order:5;flex-basis:100%;flex-wrap:wrap;justify-content:center;gap:4px;padding:4px 0 2px}
+  .snav-t{padding:8px 10px;font-size:.84rem}.snav-l{display:inline!important}
+}
+@media (max-width:420px){.snav-clock{display:none}.snav-t{padding:7px 8px;font-size:.8rem}}
+html{background:var(--bg)}
