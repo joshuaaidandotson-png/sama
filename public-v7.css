@@ -80,3 +80,50 @@ a:focus-visible,button:focus-visible,.panel:focus-visible{outline:3px solid var(
 .ha-facts li{background:var(--bg);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:2px}.ha-facts span{font-size:1.1rem}.ha-facts b{font-size:.92rem;color:var(--navy)}.ha-facts small{font-size:.74rem;color:var(--ink3)}
 @media (max-width:860px){.ha-facts{grid-template-columns:1fr 1fr}}
 @media (max-width:860px){.hh-stk{width:64px;top:-14px;right:-6px;bottom:auto}}
+
+/* ===== Round 4 ===== */
+/* Only panels that open a page react to hover */
+.panel:not(.clicky):hover,.panel:not(.clicky):hover{transform:none!important;box-shadow:var(--sh2)!important;border-color:var(--line)!important}
+/* Board banners in the Academy style: group colour, big Japanese wording, stickers */
+.hero.band{position:relative;overflow:hidden;color:#fff;border:0;background:linear-gradient(135deg,var(--bA),var(--bB))}
+.hero.band.b-pro{--bA:#6A1F14;--bB:#E0553B}.hero.band.b-aca{--bA:#173A63;--bB:#3F7FC1}.hero.band.b-soc{--bA:#2B1F57;--bB:#7457C8}
+.hero.band h1,.hero.band .lead,.hero.band .intro{color:#fff}.hero.band .lead{opacity:.92}.hero.band .eyebrow{color:#FFE2A6}
+.hero.band .badge{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.2)}.hero.band .badge .ic{color:#FFE2A6}
+.hero.band .btn.ghost{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3)}.hero.band .btn.ghost:hover{background:rgba(255,255,255,.22)}
+.hero.band .btn{background:#fff;color:var(--ink);border-color:#fff;box-shadow:none}.hero.band .btn .ic{color:var(--tomato)}
+.band-jp{position:absolute;right:120px;top:50%;transform:translateY(-50%);font:900 clamp(4rem,9vw,7rem)/1 var(--kana);color:rgba(255,255,255,.14);letter-spacing:.04em;pointer-events:none;white-space:nowrap}
+.band-stk{width:96px;right:18px;top:18px;transform:rotate(8deg)}.band-stk2{width:58px;right:110px;bottom:14px;transform:rotate(-12deg)}
+.hero.band > *:not(.band-jp):not(.stk){position:relative;z-index:2;max-width:calc(100% - 120px)}
+@media (max-width:860px){.band-jp{right:10px;top:auto;bottom:4px;transform:none;font-size:3.4rem}.band-stk{width:64px}.band-stk2{display:none}.hero.band > *:not(.band-jp):not(.stk){max-width:100%}}
+/* Home: extra sticker, About Me sticker by the name */
+.hh-stk3{width:60px;right:205px;bottom:26px;transform:rotate(-14deg)}
+.ha-top{position:relative;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.ha-stk{width:62px;transform:rotate(10deg);flex:none;filter:drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 6px 10px rgba(27,36,64,.2))}
+.ha-btns{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+/* Social link stickers (Instagram, LinkedIn, Contact Me) */
+.soc-stks{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-top:12px}
+.soc-stk{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:0;padding:0;cursor:pointer;text-decoration:none;color:inherit;font:700 .7rem var(--body);transition:transform .25s var(--spring)}
+.soc-stk img{width:58px;height:58px}.soc-stk:hover{transform:translateY(-3px) rotate(-4deg)}.soc-stk:focus-visible{outline:3px solid var(--marigold);border-radius:12px}
+.hero.band .soc-stk{color:#fff}.ha-btns .soc-stks{margin-top:0}
+.sl-handle{font-weight:700;color:var(--ink2);margin:4px 0 0}
+/* Top games: neat ranked list */
+.ranks{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.ranks li{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;background:var(--surface2);border:1px solid var(--line)}
+.rk{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:800 .9rem var(--body);color:var(--navy);flex:none}
+.rk.r1{background:linear-gradient(180deg,#FFE7A3,#F5C451)}.rk.r2{background:linear-gradient(180deg,#F1F3F7,#C9CFDA)}.rk.r3{background:linear-gradient(180deg,#F7D9C0,#D99A6C)}
+.rn{flex:1;font-weight:650}.rm{font-size:1.1rem}
+/* Stars as bullets everywhere */
+ul.list,.interests ul,.hl-list{list-style:none;padding-left:0}
+ul.list > li,.interests ul > li{position:relative;padding-left:1.35em}
+ul.list > li::before,.interests ul > li::before{content:"★";position:absolute;left:0;top:.05em;color:var(--gold);font-size:.85em}
+/* Theme follows macOS (light / dark) */
+@media (prefers-color-scheme: dark){
+ :root{--bg:#0F1426;--bg2:#1A2140;--surface:#161D36;--surface2:#1C2443;--ink:#EEF0F8;--ink2:#B5BCD4;--ink3:#7E86A3;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.16);--sky-l:#1D2D4A;--sage-l:#1B3227;--mari-l:#3A2C14;--plum-l:#2A2148;--tom-l:#3D1F1A;--gold-ll:#33291A}
+ body{background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1.2px);background-size:22px 22px}
+ .btn.ghost:hover{background:var(--surface2)}.modal-card{color:var(--ink)}
+ .rk{color:#141C36}
+}
+@media (max-width:860px){.ha-top{flex-direction:row!important;align-items:flex-start}}
+/* round4: band buttons readable in both themes */
+.band .btn:not(.ghost){background:#fff;color:#1d1d1f!important;border-color:#fff}
+.band .btn.ghost{background:rgba(255,255,255,.14);color:#fff!important;border-color:rgba(255,255,255,.45)}
+.band .btn.ghost.disabled{color:rgba(255,255,255,.75)!important}

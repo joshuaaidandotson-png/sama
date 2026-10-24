@@ -113,6 +113,11 @@ const R = {
 };
 document.querySelectorAll("[data-banner]").forEach(el => { const v = DATA.bannerLabels[el.dataset.banner]; if (v) el.textContent = v; });
 document.querySelectorAll("[data-chart]").forEach(el => { const f = R[el.dataset.chart]; if (f) el.innerHTML = f(); });
+/* Round 4: GPA and About Me come from Sama Academy (data/academy.json, written by the Academy → Studios sync). */
+fetch("data/academy.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(A=>{ if(!A) return;
+  if(A.gpa&&isFinite(A.gpa.cumulative)){ DATA.gpaUH=+A.gpa.cumulative; document.querySelectorAll('[data-chart^="gpa"]').forEach(el=>{ const f=R[el.dataset.chart]; if(f) el.innerHTML=f(); }); }
+  const v={...(A.profile||{}),gpa:A.gpa?Number(A.gpa.cumulative).toFixed(2):null};
+  document.querySelectorAll("[data-sync]").forEach(el=>{ const x=v[el.dataset.sync]; if(x) el.textContent=x; }); }).catch(()=>{});
 /* countdowns */
 function tickCounts() {
   document.querySelectorAll("[data-count]").forEach(el => {
