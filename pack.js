@@ -36,38 +36,17 @@
     /* widen a card sideways into empty columns when the whole strip beside it is free */
     function freeCol(c,t,b,me){return P.every(function(o){return o===me||c<o.c||c>=o.c+o.w||o.t+o.h+G<=t||o.t>=b+G;});}
     P.forEach(function(p){while(p.c+p.w<12&&freeCol(p.c+p.w,p.t,p.t+p.h,p))p.w++;while(p.c>0&&freeCol(p.c-1,p.t,p.t+p.h,p)){p.c--;p.w++;}});
-    /* dev_20261024b: widening changes a card's height, so re-measure at the final widths and re-stack (same order and
-       columns) before filling; otherwise gaps open under widened cards. */
-    P.forEach(function(p){p.e.style.gridColumn=(p.c+1)+" / span "+p.w;p.e.style.gridRow="auto";});
-    P.forEach(function(p){p.h=Math.max(1,Math.ceil(p.e.getBoundingClientRect().height/2));});
-    bot=[0,0,0,0,0,0,0,0,0,0,0,0];
-    P.forEach(function(p){var t=0,j;for(j=p.c;j<p.c+p.w;j++)t=Math.max(t,bot[j]);p.t=t;for(j=p.c;j<p.c+p.w;j++)bot[j]=t+p.h+G;});
     var maxB=Math.max.apply(null,P.map(function(p){return p.t+p.h;}));
     P.forEach(function(p){
       var tgt=null;
       P.forEach(function(o){if(o!==p&&o.t>=p.t+p.h&&o.c<p.c+p.w&&o.c+o.w>p.c){var b=o.t-G;if(tgt===null||b<tgt)tgt=b;}});
-      if(tgt===null)tgt=maxB; /* every column ends on the same line */
+      if(tgt===null)tgt=(maxB-(p.t+p.h)<=70)?maxB:p.t+p.h; /* even the bottom edge when close */
       if(tgt-(p.t+p.h)>0){p.h=tgt-p.t;p.e.classList.add("pk-fill");}
     });
     tail.forEach(function(e){e.style.gridColumn="1 / -1";e.style.gridRow=(maxB+G+1)+" / span "+Math.max(1,Math.ceil(e.getBoundingClientRect().height/2));});
     P.forEach(function(p){p.e.style.gridColumn=(p.c+1)+" / span "+p.w;p.e.style.gridRow=(p.t+1)+" / span "+p.h;});
   }
-  /* dev_20261024b: inner card lists (.rt-grid) go into the shortest column, 16px gaps, no stretched blanks. */
-  function packList(g){
-    var kids=Array.prototype.filter.call(g.children,function(e){return getComputedStyle(e).display!=="none";});
-    var W=g.clientWidth,n=Math.max(1,Math.floor((W+16)/(260+16)));
-    g.style.display="grid";g.style.columns="auto";g.style.gridTemplateColumns="repeat("+n+",minmax(0,1fr))";g.style.columnGap="16px";
-    if(n<2){g.style.gridAutoRows="";g.style.rowGap="16px";kids.forEach(function(e){e.style.gridColumn="";e.style.gridRow="";});return;}
-    g.style.gridAutoRows="2px";g.style.rowGap="0";
-    kids.forEach(function(e){e.style.gridRow="auto";e.style.gridColumn="1";});
-    var hs=kids.map(function(e){return Math.ceil(e.getBoundingClientRect().height/2);}),col=[];for(var i=0;i<n;i++)col.push(0);
-    /* pick the column count (2..max) that leaves the least blank area under the columns */
-    var bestN=n,bestB=null;for(var m=2;m<=n;m++){var cc=[];for(var i=0;i<m;i++)cc.push(0);hs.forEach(function(h){var c=0;for(var i=1;i<m;i++)if(cc[i]<cc[c]-1)c=i;cc[c]+=h+8;});var mx=Math.max.apply(null,cc),bl=0;cc.forEach(function(v){bl+=(mx-v)*(W/m);});if(bestB===null||bl<bestB*0.9){bestB=bl;bestN=m;}}
-    if(bestN!==n){n=bestN;g.style.gridTemplateColumns="repeat("+n+",minmax(0,1fr))";col=[];for(var i2=0;i2<n;i2++)col.push(0);kids.forEach(function(e){e.style.gridRow="auto";e.style.gridColumn="1";});hs=kids.map(function(e){return Math.ceil(e.getBoundingClientRect().height/2);});}
-    kids.forEach(function(e,k){var c=0;for(var i=1;i<n;i++)if(col[i]<col[c]-1)c=i;e.style.gridColumn=String(c+1);e.style.gridRow=(col[c]+1)+" / span "+hs[k];col[c]+=hs[k]+8;});
-  }
   function packAll(){
-    document.querySelectorAll(".rt-grid").forEach(function(g){if(g.offsetParent!==null)packList(g);});
     document.querySelectorAll(".dash,.wgrid").forEach(function(g){
       if(g.offsetParent===null)return;
       packGrid(g,16,g.classList.contains("dash")?1001:861);
