@@ -156,3 +156,6 @@ h3.w-h3 img.stk.w-stk{position:static;width:34px;height:34px;flex:none;transform
 .soc-foot .soc-stk img{width:46px;height:46px}
 
 .ach-stk{cursor:default;opacity:.85}.ach-stk:hover{transform:none}.ach-stk img{filter:grayscale(1) opacity(.6) drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 6px 10px rgba(27,36,64,.18))}.ach-stk span{color:inherit}.ach-soon{font:700 .62rem var(--body);text-transform:uppercase;letter-spacing:.06em;background:rgba(27,36,64,.12);border-radius:999px;padding:1px 7px}
+
+/* fix_0440: board footers use the home layout, one button then three stickers */
+.soc-foot .ha-btns{justify-content:center;margin-top:0}
