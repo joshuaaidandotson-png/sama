@@ -199,9 +199,10 @@ if (sphere) {
   var cur=null,busy=false;
   function stagger(b){if(reduce)return;Array.prototype.forEach.call(b.children,function(el,i){el.classList.remove("rise");void el.offsetWidth;el.style.animationDelay=(80+i*55)+"ms";el.classList.add("rise");});}
   function mark(k){document.querySelectorAll("[data-nav]").forEach(function(a){var on=a.dataset.nav===k&&a.classList.contains("tab");a.classList.toggle("active",on);if(on)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
-    var b=boards[k];document.title=b.dataset.title.replace("&amp;","&")+" · Sama — Joshua Dotson";var f=document.getElementById("foot-title");if(f)f.innerHTML=b.dataset.title;document.body.dataset.page=k;}
+    var b=boards[k];document.title=b.dataset.title.replace("&amp;","&")+" · Sama — Joshua Dotson";var f=document.getElementById("foot-title");if(f)f.innerHTML=b.dataset.title;document.body.dataset.page=k;document.dispatchEvent(new CustomEvent("sama:board"));}
   function show(k,push){
-    if(!boards[k]){ if(k.indexOf("/")>0&&window.samaOverview&&window.samaOverview(k)){k="overview";if(cur==="overview"){mark(k);stagger(boards[k]);window.scrollTo(0,0);return;}} else k="home"; }
+    if(!boards[k]){ if(k.indexOf("/")>0&&window.samaOverview&&window.samaOverview(k)){k="overview";if(cur==="overview"){mark(k);stagger(boards[k]);window.scrollTo(0,0);return;}}
+      else { var pk=k.split("/"); if(boards[pk[0]]&&pk[1]!=null){ k=pk[0]; var same=k===cur; setTimeout(function(){window.samaScrollTo&&window.samaScrollTo(pk[0],pk[1]);},same?0:820); if(same) return; } else k="home"; } }
     if(k===cur||busy)return;
     var from=cur?boards[cur]:null,to=boards[k];
     var dir=cur&&order.indexOf(k)<order.indexOf(cur)?"prev":"next";

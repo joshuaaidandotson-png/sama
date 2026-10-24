@@ -16,15 +16,15 @@
 .snav-tabs{display:flex;gap:2px;flex:1;justify-content:center;flex-wrap:nowrap;min-width:0}
 .snav-g{position:relative;display:flex;align-items:center}
 .snav-t{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;font-weight:600;font-size:.86rem;color:rgba(255,255,255,.78);transition:background .2s,color .2s;white-space:nowrap}
-.snav-t:hover,.snav-g:hover>.snav-t,.snav-g:focus-within>.snav-t{color:#fff;background:rgba(255,255,255,.1)}
+.snav-t:hover,.snav-g.hov>.snav-t,.snav-t:focus-visible{color:#fff;background:rgba(255,255,255,.1)}
 .snav-g.on>.snav-t{background:#fff;color:var(--navy)}
 .snav-e{font-size:.95rem}
 .snav-x{display:none}
 .snav-menu{position:absolute;top:calc(100% + 10px);left:50%;min-width:220px;padding:8px;border-radius:18px;background:var(--surface);color:var(--ink);box-shadow:var(--sh3),0 0 0 1px var(--line);
   opacity:0;visibility:hidden;transform:translate(-50%,-6px);transition:opacity .18s,transform .22s var(--spring),visibility .18s;z-index:60}
 .snav-menu::before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px}
-.snav-g:hover>.snav-menu,.snav-g:focus-within>.snav-menu,.snav-brand:hover>.snav-menu,.snav-brand:focus-within>.snav-menu{opacity:1;visibility:visible;transform:translate(-50%,0)}
-.snav-bmenu{left:0;transform:translate(0,-6px);min-width:180px}.snav-brand:hover>.snav-bmenu,.snav-brand:focus-within>.snav-bmenu{transform:translate(0,0)}
+.snav-g.hov>.snav-menu,.snav-brand.hov>.snav-menu{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.snav-bmenu{left:0;transform:translate(0,-6px);min-width:180px}.snav-brand.hov>.snav-bmenu{transform:translate(0,0)}
 .snav-mi{display:flex;align-items:center;gap:10px;width:100%;padding:9px 12px;border-radius:12px;font:600 .88rem var(--body);color:var(--ink);background:none;border:0;cursor:pointer;text-align:left}
 .snav-mi:hover,.snav-mi:focus-visible{background:var(--bg)}
 .snav-r{display:flex;align-items:center;gap:6px;flex-shrink:0}
@@ -44,12 +44,18 @@
   .snav-g{flex-wrap:wrap}.snav-t{flex:1;padding:12px 14px;font-size:1rem}.snav-l{display:inline!important}
   .snav-x{display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,.08);color:#fff;font-size:1rem;cursor:pointer;transition:transform .25s}
   .snav-g.open .snav-x{transform:rotate(180deg)}
-  .snav-menu,.snav-g:hover>.snav-menu{position:static;transform:none;opacity:1;visibility:visible;display:none;flex-basis:100%;min-width:0;margin:2px 0 6px;background:rgba(255,255,255,.06);box-shadow:none;color:#fff}
+  .snav-menu,.snav-g.hov>.snav-menu{position:static;transform:none;opacity:1;visibility:visible;display:none;flex-basis:100%;min-width:0;margin:2px 0 6px;background:rgba(255,255,255,.06);box-shadow:none;color:#fff}
   .snav-g.open>.snav-menu{display:block}.snav-g .snav-mi{color:#fff}.snav-g .snav-mi:hover{background:rgba(255,255,255,.1)}
-  .snav-bmenu,.snav-brand:hover>.snav-bmenu{position:absolute;display:block;opacity:0;visibility:hidden;color:var(--ink);background:var(--surface)}
-  .snav-brand:focus-within>.snav-bmenu,.snav-brand:hover>.snav-bmenu{opacity:1;visibility:visible;transform:none;box-shadow:var(--sh3)}
+  .snav-bmenu,.snav-brand.hov>.snav-bmenu{position:absolute;display:block;opacity:0;visibility:hidden;color:var(--ink);background:var(--surface)}
+  .snav-brand:focus-within>.snav-bmenu,.snav-brand.hov>.snav-bmenu{opacity:1;visibility:visible;transform:none;box-shadow:var(--sh3)}
 }
 @media (max-width:420px){.snav-clock{display:none}}
 .snav-accm{display:none}
 @media (max-width:860px){.snav-accm{display:flex;border-top:1px solid var(--navy-line);margin-top:6px;padding-top:6px}}
 html{background:var(--bg)}
+
+/* hover lift (restored from the original tabs) + brand as the active Home item */
+.snav-t{transition:background .28s cubic-bezier(.22,.8,.24,1),color .28s,transform .28s cubic-bezier(.22,.8,.24,1),box-shadow .28s}
+@media (hover:hover){.snav-t:hover{transform:translateY(-2px) scale(1.05);box-shadow:0 0 16px rgba(255,210,173,.3)}.snav-wm{transition:transform .28s cubic-bezier(.22,.8,.24,1)}.snav-wm:hover{transform:scale(1.04)}}
+.snav-brand.on .snav-wm{background:#fff;color:var(--navy);border-radius:999px;padding:6px 14px}
+@media (prefers-reduced-motion:reduce){.snav-t:hover,.snav-wm:hover{transform:none}}
