@@ -306,3 +306,6 @@ body.enter-prev main.dash{animation:samaInL .42s cubic-bezier(.22,.8,.24,1)}
 .res-pages{display:flex;flex-direction:column;align-items:center;gap:16px}
 .res-pages img{display:block;width:100%;max-width:900px;height:auto;background:#fff;border-radius:6px;box-shadow:0 10px 30px rgba(0,0,0,.3)}
 @media (max-width:520px){.dash .pdfview{padding:8px!important}.res-pages{gap:10px}}
+
+/* gold " | " title divider (matches résumé v49 + signature v7.9) */
+.gold-bar{color:#F2B33D}

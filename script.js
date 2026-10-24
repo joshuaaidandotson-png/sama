@@ -117,7 +117,9 @@ document.querySelectorAll("[data-chart]").forEach(el => { const f = R[el.dataset
 fetch("data/academy.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(A=>{ if(!A) return;
   if(A.gpa&&isFinite(A.gpa.cumulative)){ DATA.gpaUH=+A.gpa.cumulative; document.querySelectorAll('[data-chart^="gpa"]').forEach(el=>{ const f=R[el.dataset.chart]; if(f) el.innerHTML=f(); }); }
   const v={...(A.profile||{}),gpa:A.gpa?Number(A.gpa.cumulative).toFixed(2):null};
-  document.querySelectorAll("[data-sync]").forEach(el=>{ const x=v[el.dataset.sync]; if(x) el.textContent=x; }); }).catch(()=>{});
+  document.querySelectorAll("[data-sync]").forEach(el=>{ const x=v[el.dataset.sync]; if(!x) return; if(el.dataset.sync==="headline") goldBar(el,x); else el.textContent=x; }); }).catch(()=>{});
+/* headline divider: " | " rendered gold #F2B33D (matches résumé v49 + signature v7.9). Text parts via text nodes only, never innerHTML. */
+function goldBar(el,text){ el.textContent=""; String(text).split("|").forEach((p,i)=>{ if(i){ const s=document.createElement("span"); s.className="gold-bar"; s.textContent="|"; el.append(s); } el.append(document.createTextNode(p)); }); }
 /* countdowns */
 function tickCounts() {
   document.querySelectorAll("[data-count]").forEach(el => {
