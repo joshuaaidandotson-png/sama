@@ -19,7 +19,6 @@ export function mountNav(host,{groups,active,account,brandHref}){
   groups.forEach(g=>{ const t=a(g.href,"snav-t"+(g.key===active?" on":""),el("span","snav-e",g.emoji||""),el("span","snav-l",g.label));
     if(g.key===active) t.setAttribute("aria-current","page"); nav.append(t); });
   const right=el("div","snav-r"); const clock=el("time","snav-clock"); right.append(clock);
-  if(account&&account.href){ const si=a(account.href,"snav-login",el("span",null,"🔑"),el("span",null,"Sign in · Sama Academy")); right.append(si); }
   bar.append(brand,nav,right);
   const tick=()=>{const d=new Date();clock.dateTime=d.toISOString();clock.textContent=new Intl.DateTimeFormat(undefined,{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}).format(d);};
   tick(); clearInterval(window.__snavT); window.__snavT=setInterval(tick,15000);
