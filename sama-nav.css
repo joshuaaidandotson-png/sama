@@ -12,7 +12,7 @@
 .snav a{color:inherit;text-decoration:none}
 /* Public bar: plain links only. No hover menus, no dropdowns, no burger. */
 .snav-wm{display:block;flex-shrink:0;font-family:var(--display);font-style:italic;font-weight:900;font-size:1.3rem;letter-spacing:-.02em;padding:6px 6px 6px 0;white-space:nowrap;transition:transform .28s cubic-bezier(.22,.8,.24,1)}
-.snav-wm::before,.snav-wm::after{content:"\2726";font-style:normal;font-family:var(--body);font-size:.62em;vertical-align:middle;color:var(--marigold,#F2B33D)}.snav-wm::before{margin-right:6px}.snav-wm::after{margin-left:6px}
+.snav-wm::before,.snav-wm::after{content:"\2726";font-style:normal;font-family:var(--body);font-size:.62em;vertical-align:middle;color:#F2B33D}.snav-wm::before{margin-right:6px}.snav-wm::after{margin-left:6px}
 .snav-wm.on{background:#fff;color:var(--navy);border-radius:999px;padding:6px 14px}
 .snav-tabs{display:flex;gap:2px;flex:1;justify-content:center;flex-wrap:nowrap;min-width:0}
 .snav-t{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;font-weight:600;font-size:.86rem;color:rgba(255,255,255,.78);white-space:nowrap;transition:background .28s cubic-bezier(.22,.8,.24,1),color .28s,transform .28s cubic-bezier(.22,.8,.24,1),box-shadow .28s}
