@@ -1,0 +1,3 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="X sticker"><defs><filter id="s" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#1B2440" flood-opacity=".28"/></filter></defs>
+<g transform="rotate(-5 60 60)" filter="url(#s)"><rect x="10" y="10" width="100" height="100" rx="28" fill="#fff"/><rect x="18" y="18" width="84" height="84" rx="22" fill="#000"/>
+<path d="M76.6 35h8.3L66.8 55.7 88 84H71.4l-13-17-14.9 17h-8.3l19.3-22.1L34 35h17l11.8 15.6zm-2.9 44h4.6L48.7 39.7h-4.9z" fill="#fff"/></g></svg>
