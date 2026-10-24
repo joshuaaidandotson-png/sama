@@ -1,12 +1,12 @@
 // Public site: shared Sama nav + landing clock/greeting + clickable panels -> overview pages. Public content only.
-import { mountNav, greeting } from "./sama-nav.js?v=13";
+import { mountNav, greeting } from "./sama-nav.js?v=14";
 const BOARDS=[["professional","💼","Professional"],["academic","📚","Academic"],["personal","🌸","Social"],["resume","📄","Résumé"]];
 const titleOf=p=>{const h=p.querySelector("h1,h3,.slabel,h2"); return h?h.textContent.trim().replace(/\s+/g," "):"";};
 const panels=k=>[...document.querySelectorAll(`.board[data-board="${k}"] > .panel`)];
 function groups(){ return BOARDS.map(([k,emo,label])=>({key:k,label,emoji:emo,href:"#"+k,
   subs:panels(k).map((p,i)=>({p,i,t:titleOf(p)})).filter(x=>x.t&&!x.p.classList.contains("photo-card")).slice(0,12).map(x=>({href:`#${k}/${x.i}`,emoji:detailOf(k,x.p)?"📖":"✦",label:x.t.length>34?x.t.slice(0,32)+"…":x.t}))})); }
 const host=document.getElementById("sama-nav");
-const draw=()=>{ const h=(document.body.dataset.page||(location.hash||"#home").slice(1).split("/")[0]); mountNav(host,{groups:groups(),active:h==="overview"?(location.hash.slice(1).split("/")[0]):h,brandHref:"#home",account:{label:"Login",emoji:"🔑",href:"https://sama-studios.web.app/login"}}); };
+const draw=()=>{ const h=(document.body.dataset.page||(location.hash||"#home").slice(1).split("/")[0]); mountNav(host,{groups:groups(),active:h==="overview"?(location.hash.slice(1).split("/")[0]):h,brandHref:"#home",noMenus:true,account:{label:"Login",emoji:"🔑",href:"https://sama-studios.web.app/login"}}); };
 // Only panels with real extra detail open a page (Jobs → full role history). Everything else is a plain card.
 const DETAIL={"professional":{"Jobs":"detail-jobs"}};
 const detailOf=(k,p)=>(DETAIL[k]||{})[titleOf(p)];

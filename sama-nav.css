@@ -63,3 +63,9 @@ html{background:var(--bg)}
 /* stars_care: every dropdown page item uses the public ★ bullet */
 .snav-star{flex:none;width:1em;text-align:center;color:var(--gold,#C99A3E);font-size:.85em;line-height:1}
 @media (max-width:860px){.snav-g .snav-star{color:var(--marigold,#F2A33A)}}
+
+/* Public: no hover/dropdown menus at all (Joshua, Oct 24). Tabs are plain links. */
+.snav.no-menus .snav-menu,.snav.no-menus .snav-x{display:none!important}
+.snav-login{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;font:600 .84rem var(--body);color:#fff;background:rgba(255,255,255,.1);text-decoration:none;white-space:nowrap}
+.snav-login:hover{background:rgba(255,255,255,.2)}
+@media (max-width:860px){.snav.no-menus .snav-login{display:none}}
