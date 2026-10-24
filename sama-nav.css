@@ -45,3 +45,5 @@ html{background:var(--bg)}
 .snav-bmenu .snav-bmi:hover,.snav-bmenu .snav-bmi:focus-visible{background:#fff}
 @media (hover:hover){.snav-brand:hover .snav-bmenu{opacity:1;visibility:visible;transform:none}}
 .snav-brand:focus-within .snav-bmenu,.snav-brand.open .snav-bmenu{opacity:1;visibility:visible;transform:none}
+/* Phone: the Login item opens inside the bar (pushes the tabs down) so it never covers a tab. */
+@media (max-width:860px),(hover:none){.snav-bmenu{position:static;display:none;padding-top:6px;transform:none}.snav-brand.open .snav-bmenu{display:block}.snav-brand:focus-within:not(.open) .snav-bmenu{display:none}}
