@@ -59,3 +59,7 @@ html{background:var(--bg)}
 @media (hover:hover){.snav-t:hover{transform:translateY(-2px) scale(1.05);box-shadow:0 0 16px rgba(255,210,173,.3)}.snav-wm{transition:transform .28s cubic-bezier(.22,.8,.24,1)}.snav-wm:hover{transform:scale(1.04)}}
 .snav-brand.on .snav-wm{background:#fff;color:var(--navy);border-radius:999px;padding:6px 14px}
 @media (prefers-reduced-motion:reduce){.snav-t:hover,.snav-wm:hover{transform:none}}
+
+/* stars_care: every dropdown page item uses the public ★ bullet */
+.snav-star{flex:none;width:1em;text-align:center;color:var(--gold,#C99A3E);font-size:.85em;line-height:1}
+@media (max-width:860px){.snav-g .snav-star{color:var(--marigold,#F2A33A)}}

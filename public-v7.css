@@ -142,3 +142,8 @@ ul.list > li::before,.interests ul > li::before{content:"★";position:absolute;
 .board-tiles a.on{outline:2px solid var(--marigold,#F2B33D)}
 @media (max-width:860px){.board-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:860px){.home-hero .hh-stk3{display:none}.home-hero .hh-stk{top:10px!important;bottom:auto!important;right:10px!important;width:58px!important}.home-hero .hh-stk2{display:none}}
+
+/* stars_care: job duty lists and goals use the same ★ bullet */
+.jd-a > li{list-style:none;position:relative;padding-left:1.9em}ol.list > li{list-style:none;position:relative;padding-left:1.35em}
+.jd-a > li::before{content:"★";position:absolute;left:10px;top:8px;color:var(--gold);font-size:.85em}
+ol.list{padding-left:0}ol.list > li::before{content:"★";position:absolute;left:0;top:.05em;color:var(--gold);font-size:.85em}
