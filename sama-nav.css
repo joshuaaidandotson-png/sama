@@ -47,3 +47,11 @@ html{background:var(--bg)}
 .snav-brand:focus-within .snav-bmenu,.snav-brand.open .snav-bmenu{opacity:1;visibility:visible;transform:none}
 /* Phone: the Login item opens inside the bar (pushes the tabs down) so it never covers a tab. */
 @media (max-width:860px),(hover:none){.snav-bmenu{position:static;display:none;padding-top:6px;transform:none}.snav-brand.open .snav-bmenu{display:block}.snav-brand:focus-within:not(.open) .snav-bmenu{display:none}}
+/* Oct 24 9:40 AM: tidy phone nav like the laptop bar: logo row, then all four tabs in one even row (emoji over label). */
+@media (max-width:560px){
+  .snav{padding:8px 10px 6px;row-gap:4px}
+  .snav-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:2px 0 0}
+  .snav-t{flex-direction:column;justify-content:center;gap:2px;padding:6px 2px;font-size:.72rem;line-height:1.1;text-align:center;min-width:0}
+  .snav-t .snav-e{font-size:1.05rem}
+  .snav-l{white-space:nowrap}
+}
